@@ -49,7 +49,7 @@ flutter run
 https://github.com/dhikaz007/simple_movie_tv_shows_app/assets/37215014/108abbdc-8a3a-4cb7-98d4-a5fe2976ad24
 
 ## License
-This project is licensed under the [Apache-2.0 License]().
+This project is licensed under the [Apache-2.0 License](https://github.com/dhikaz007/simple_movie_tv_shows_app/blob/master/LICENSE.md).
 
 ## Author
 This Flutter project is developed by [Andhika Pangestu P](https://github.com/dhikaz007)
