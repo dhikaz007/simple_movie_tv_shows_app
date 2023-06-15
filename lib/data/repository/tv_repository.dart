@@ -13,8 +13,8 @@ abstract class TVRepository {
 class TVRepositoryImpl extends TVRepository {
   @override
   Future<List<TVResult>?> loadAiringTV() async {
-    final json =
-        await DioServicesTV().getAiringTV(ApiEndpoint.airingToday);
+    final json = await DioServicesTV()
+        .getAiringTV('${ApiEndpoint.tv}${ApiEndpoint.airingToday}');
     if (json.statusCode == 200) {
       final data = TVModel.fromJson(json.data);
       return data.results;
@@ -25,8 +25,7 @@ class TVRepositoryImpl extends TVRepository {
 
   @override
   Future<List<TVResult>?> loadPopularTV() async {
-    final json =
-        await DioServicesTV().getPopularTV(ApiEndpoint.popularMovie);
+    final json = await DioServicesTV().getPopularTV('${ApiEndpoint.tv}${ApiEndpoint.popular}');
     if (json.statusCode == 200) {
       final data = TVModel.fromJson(json.data);
       return data.results;
@@ -37,8 +36,7 @@ class TVRepositoryImpl extends TVRepository {
 
   @override
   Future<List<TVResult>?> loadTopRatedTV() async {
-    final json =
-        await DioServicesTV().getTopRatedTV(ApiEndpoint.topRatedMovie);
+    final json = await DioServicesTV().getTopRatedTV('${ApiEndpoint.tv}${ApiEndpoint.topRated}');
     if (json.statusCode == 200) {
       final data = TVModel.fromJson(json.data);
       return data.results;
@@ -49,8 +47,7 @@ class TVRepositoryImpl extends TVRepository {
 
   @override
   Future<List<TVResult>?> loadOnTheAirTV() async {
-    final json =
-        await DioServicesTV().getOnTheAirTV(ApiEndpoint.onTheAir);
+    final json = await DioServicesTV().getOnTheAirTV('${ApiEndpoint.tv}${ApiEndpoint.onTheAir}');
     if (json.statusCode == 200) {
       final data = TVModel.fromJson(json.data);
       return data.results;
