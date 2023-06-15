@@ -63,7 +63,7 @@ class MovieRepositoryImpl extends MovieRepository {
 
   @override
   Future<List<SearchResults>?> loadSearchMovie({required String query}) async {
-    final json = await DioServicesSearch().getSearchMovie(
+    final json = await DioServicesSearch().getSearch(
       '${ApiEndpoint.search}${ApiEndpoint.movie}',
       query: query,
     );

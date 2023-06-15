@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../detail_page/view/detail_main.dart';
+import '../view_model/search_tv_view_model.dart';
 import '../view_model/search_movie_view_model.dart';
 import '../../../utils/constant/app_color.dart';
 import '../../../utils/constant/app_spacing.dart';
@@ -41,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Consumer<SearchMovieViewModel>(
+              Consumer<SearchTVViewModel>(
                 builder: (context, searchValue, _) {
                   return SearchWIdget(
                     controller: searchController,
@@ -55,7 +56,10 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
                     onChanged: (value) {
-                      searchValue.showSearchMovie(query: value);
+                      // Search TV
+                      searchValue.showSearchTV(query: value);
+                      // Search Movie
+                      //searchValue.showSearchMovie(query: value);
                     },
                     onSubmitted: (value) {
                       value = searchController.text;
@@ -75,7 +79,7 @@ class _SearchPageState extends State<SearchPage> {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 1.4,
-                child: Consumer<SearchMovieViewModel>(
+                child: Consumer<SearchTVViewModel>(
                   builder: (context, searchValue, _) {
                     if (searchValue.querySearch.isEmpty) {
                       return Center(
@@ -91,41 +95,42 @@ class _SearchPageState extends State<SearchPage> {
                     } else {
                       return ListView.builder(
                         physics: const BouncingScrollPhysics(),
-                        itemCount: searchValue.movieResult?.length,
+                        itemCount: searchValue.tvResult?.length,
                         itemBuilder: (context, index) {
                           return SearchResultWidget(
                             moviePoster:
-                                searchValue.movieResult?[index].posterPath ??
-                                    '',
-                            movieTitle:
-                                searchValue.movieResult?[index].title ?? '',
+                                searchValue.tvResult?[index].posterPath ?? '',
+                            movieTitle: searchValue.tvResult?[index].name ?? '',
                             movieRating:
-                                searchValue.movieResult?[index].voteAverage ??
-                                    0.0,
+                                searchValue.tvResult?[index].voteAverage ?? 0.0,
                             movieOverview:
-                                searchValue.movieResult?[index].overview ?? '',
+                                searchValue.tvResult?[index].overview ?? '',
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) {
                                     return DetailMain(
                                       movieBackdrop: searchValue
-                                              .movieResult?[index]
-                                              .backdropPath ??
+                                              .tvResult?[index].backdropPath ??
                                           '',
-                                      movieTitle: searchValue
-                                              .movieResult?[index].title ??
-                                          '',
+                                      movieTitle:
+                                          searchValue.tvResult?[index].name ??
+                                              '',
                                       movieRating: searchValue
-                                              .movieResult?[index]
-                                              .voteAverage ??
+                                              .tvResult?[index].voteAverage ??
                                           0.0,
-                                      movieReleaseData: DateTime.parse(
-                                          searchValue.movieResult?[index]
-                                                  .releaseDate ??
-                                              ''),
+                                      movieReleaseData:
+                                          // Search TV
+                                          searchValue.tvResult?[index]
+                                                  .firstAirDate ??
+                                              DateTime.now(),
+                                      // Search Movie
+                                      // DateTime.parse(
+                                      //     searchValue.tvResult?[index]
+                                      //             .releaseDate ??
+                                      //         ''),
                                       movieOverview: searchValue
-                                              .movieResult?[index].overview ??
+                                              .tvResult?[index].overview ??
                                           '',
                                     );
                                   },
