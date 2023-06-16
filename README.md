@@ -56,3 +56,6 @@ This Flutter project is developed by [Andhika Pangestu P](https://github.com/dhi
 
 ## Contact
 You can reach out to me directly at p.andhikapangestu007@gmail.com
+
+## Inspiration UI
+The interface design used in this application is inspired by the work of [Behance](https://www.behance.net/gallery/132150645/Cinema-App-Design-concept?tracking_source=search_projects%7Cmovie+app+mobile).
