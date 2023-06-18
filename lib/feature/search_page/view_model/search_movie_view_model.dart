@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/model/search_movie_model.dart';
+import '../../../data/model/search_tv_model.dart';
 import '../../../data/repository/movie_repository.dart';
 
 class SearchMovieViewModel extends ChangeNotifier {
@@ -9,9 +10,11 @@ class SearchMovieViewModel extends ChangeNotifier {
   SearchMovieViewModel({required this.movieRepository});
 
   List<SearchResults>? _movieResult = [];
+  SearchTVResult? _movieListResult;
   String _querySearch = '';
 
   List<SearchResults>? get movieResult => _movieResult;
+  SearchTVResult? get movieListResult => _movieListResult;
   String get querySearch => _querySearch;
 
   Future<void> showSearchMovie({required String query}) async {

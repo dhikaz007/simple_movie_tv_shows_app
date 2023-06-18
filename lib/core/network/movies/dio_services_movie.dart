@@ -3,22 +3,22 @@ import 'package:dio/dio.dart';
 import '../dio_network.dart';
 
 class DioServicesMovie {
-  Future<Response> getTopRatedMovie(String endpoint) async {
+  Future<Response> getTopRatedMovie({required String endpoint}) async {
     final response = await DioNetwork.dio.get(endpoint);
     return response;
   }
 
-  Future<Response> getUpcomingMovie(String endpoint) async {
+  Future<Response> getUpcomingMovie({required String endpoint}) async {
     final response = await DioNetwork.dio.get(endpoint);
     return response;
   }
 
-  Future<Response> getNowPlayingMovie(String endpoint) async {
+  Future<Response> getNowPlayingMovie({required String endpoint}) async {
     final response = await DioNetwork.dio.get(endpoint);
     return response;
   }
 
-  Future<Response> getPopularMovie(String endpoint) async {
+  Future<Response> getPopularMovie({required String endpoint}) async {
     final response = await DioNetwork.dio.get(endpoint);
     return response;
   }

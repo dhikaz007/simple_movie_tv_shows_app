@@ -17,7 +17,7 @@ class TVRepositoryImpl extends TVRepository {
   @override
   Future<List<TVResult>?> loadAiringTV() async {
     final json = await DioServicesTV()
-        .getAiringTV('${ApiEndpoint.tv}${ApiEndpoint.airingToday}');
+        .getAiringTV(endpoint: '${ApiEndpoint.tv}${ApiEndpoint.airingToday}');
     if (json.statusCode == 200) {
       final data = TVModel.fromJson(json.data);
       return data.results;
@@ -29,7 +29,7 @@ class TVRepositoryImpl extends TVRepository {
   @override
   Future<List<TVResult>?> loadPopularTV() async {
     final json = await DioServicesTV()
-        .getPopularTV('${ApiEndpoint.tv}${ApiEndpoint.popular}');
+        .getPopularTV(endpoint: '${ApiEndpoint.tv}${ApiEndpoint.popular}');
     if (json.statusCode == 200) {
       final data = TVModel.fromJson(json.data);
       return data.results;
@@ -41,7 +41,7 @@ class TVRepositoryImpl extends TVRepository {
   @override
   Future<List<TVResult>?> loadTopRatedTV() async {
     final json = await DioServicesTV()
-        .getTopRatedTV('${ApiEndpoint.tv}${ApiEndpoint.topRated}');
+        .getTopRatedTV(endpoint: '${ApiEndpoint.tv}${ApiEndpoint.topRated}');
     if (json.statusCode == 200) {
       final data = TVModel.fromJson(json.data);
       return data.results;
@@ -53,7 +53,7 @@ class TVRepositoryImpl extends TVRepository {
   @override
   Future<List<TVResult>?> loadOnTheAirTV() async {
     final json = await DioServicesTV()
-        .getOnTheAirTV('${ApiEndpoint.tv}${ApiEndpoint.onTheAir}');
+        .getOnTheAirTV(endpoint: '${ApiEndpoint.tv}${ApiEndpoint.onTheAir}');
     if (json.statusCode == 200) {
       final data = TVModel.fromJson(json.data);
       return data.results;
@@ -65,7 +65,7 @@ class TVRepositoryImpl extends TVRepository {
   @override
   Future<List<SearchTVResult>?> loadSearchTV({required String query}) async {
     final json = await DioServicesSearch().getSearch(
-      '${ApiEndpoint.search}${ApiEndpoint.tv}',
+      endpoint: '${ApiEndpoint.search}${ApiEndpoint.tv}',
       query: query,
     );
     if (json.statusCode == 200) {

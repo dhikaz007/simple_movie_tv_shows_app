@@ -61,9 +61,7 @@ class _SearchPageState extends State<SearchPage> {
                       // Search Movie
                       //searchValue.showSearchMovie(query: value);
                     },
-                    onSubmitted: (value) {
-                      value = searchController.text;
-                    },
+                    onSubmitted: (value) {},
                   );
                 },
               ),

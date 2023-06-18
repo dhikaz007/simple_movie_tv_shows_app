@@ -10,7 +10,7 @@ class PeopleRepositoryImpl extends PeopleRepository {
   @override
   Future<List<PeopleResults>?> loadPopularPeople() async {
     final json = await DioServicesPeople()
-        .getPeople('${ApiEndpoint.person}${ApiEndpoint.popular}');
+        .getPeople(endpoint: '${ApiEndpoint.person}${ApiEndpoint.popular}');
     if (json.statusCode == 200) {
       final data = PeopleModel.fromJson(json.data);
       return data.results;

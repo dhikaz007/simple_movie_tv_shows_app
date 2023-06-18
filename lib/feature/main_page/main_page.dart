@@ -27,7 +27,10 @@ class MainPage extends StatelessWidget {
       builder: (context, selectedIndexValue, _) {
         return AppScaffold(
           backgroundColor: AppColor.blacklist,
-          body: _pageIndex[selectedIndexValue],
+          body: IndexedStack(
+            index: selectedIndex.value,
+            children: _pageIndex,
+          ),
           isAppbar: AppBarVisibility.off,
           bottomNavigationBar: ClipRRect(
             borderRadius: const BorderRadius.only(

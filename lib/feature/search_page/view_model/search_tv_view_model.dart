@@ -9,9 +9,11 @@ class SearchTVViewModel extends ChangeNotifier {
   SearchTVViewModel({required this.tvRepository});
 
   List<SearchTVResult>? _tvResult = [];
+  SearchTVResult? _tvListResult;
   String _querySearch = '';
 
   List<SearchTVResult>? get tvResult => _tvResult;
+  SearchTVResult? get tvListResult => _tvListResult;
   String get querySearch => _querySearch;
 
   Future<void> showSearchTV({required String query}) async {
