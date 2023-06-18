@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/constant/app_color.dart';
-import '../../../detail_page/view/detail_main.dart';
-import '../../view_model/now_playing_movie_view_model.dart';
-import '../widget/movie_item_widget.dart';
+import '../../../detail/view/detail_main.dart';
+import '../../../home/view/widget/movie_item_widget.dart';
+import '../../view_model/view_model.dart';
 
-class NowPlayingMovieList extends StatelessWidget {
-  const NowPlayingMovieList({super.key});
+class TopRatedTVList extends StatelessWidget {
+  const TopRatedTVList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NowPlayingMovieViewModel>(
-      builder: (context, movieValue, child) {
-        if (movieValue.isLoading) {
+    return Consumer<TopRatedTVViewModel>(
+      builder: (context, tvValue, child) {
+        if (tvValue.isLoading) {
           return const Center(
             child: CircularProgressIndicator(
               color: AppColor.goldenBuddhaBelly,
@@ -27,27 +27,27 @@ class NowPlayingMovieList extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: movieValue.movieResult.length,
+              itemCount: tvValue.tvResult?.length,
               itemBuilder: (context, index) {
                 return MovieItemWidget(
-                  moviePoster: movieValue.movieResult[index].posterPath,
-                  movieTitle: movieValue.movieResult[index].title,
-                  movieRating: movieValue.movieResult[index].voteAverage,
+                  moviePoster: tvValue.tvResult?[index].posterPath ?? '',
+                  movieTitle: tvValue.tvResult?[index].name ?? '',
+                  movieRating: tvValue.tvResult?[index].voteAverage ?? 0.0,
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
                           return DetailMain(
                             movieBackdrop:
-                                movieValue.movieResult[index].backdropPath,
-                            movieTitle: movieValue.movieResult[index].title,
+                                tvValue.tvResult?[index].backdropPath ?? '',
+                            movieTitle: tvValue.tvResult?[index].name ?? '',
                             movieRating:
-                                movieValue.movieResult[index].voteAverage,
-                            movieReleaseData:
-                                movieValue.movieResult[index].releaseDate,
+                                tvValue.tvResult?[index].voteAverage ?? 0.0,
+                            movieReleaseData: DateTime.parse(
+                                tvValue.tvResult?[index].firstAirDate ?? ''),
                             movieOverview:
-                                movieValue.movieResult[index].overview,
-                                result: movieValue.movieResult[index],
+                                tvValue.tvResult?[index].overview ?? '',
+                            //result: tvValue.tvResult[index],
                           );
                         },
                       ),

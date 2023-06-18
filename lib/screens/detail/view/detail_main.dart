@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../models/movie_model.dart';
 import '../../../repositories/movie_repository.dart';
-import '../../favorite_page/view_model/favorite_view_model.dart';
+import '../../favorite/view_model/favorite_view_model.dart';
 import 'detail_page.dart';
 
 class DetailMain extends StatelessWidget {

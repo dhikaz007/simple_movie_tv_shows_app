@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../detail_page/view/detail_main.dart';
+import '../../detail/view/detail_main.dart';
 import '../view_model/search_tv_view_model.dart';
 import '../view_model/search_movie_view_model.dart';
 import '../../../utils/constant/app_color.dart';

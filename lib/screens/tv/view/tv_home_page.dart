@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'category_tv/category_tv.dart';
 import '../../../utils/widget/app_scaffold.dart';
 import '../../../utils/constant/app_spacing.dart';
 import '../../../utils/constant/app_color.dart';
-import '../../search_page/view/search_main.dart';
-import 'category_movie/category_movie.dart';
-import 'widget/header_title_widget.dart';
+import '../../home/view/widget/header_title_widget.dart';
+import '../../search/view/search_main.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class TVHomePage extends StatelessWidget {
+  const TVHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
       isAppbar: AppBarVisibility.on,
       backgroundColor: AppColor.blacklist,
-      title: 'Movie List',
+      title: 'TV List',
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space20),
@@ -47,19 +47,19 @@ class HomePage extends StatelessWidget {
             SizedBox(height: AppSpacing.space20),
             HeaderTitleWIdget(title: 'Top Rated'),
             SizedBox(height: AppSpacing.space20),
-            TopRatedMovieList(),
+            TopRatedTVList(),
             SizedBox(height: AppSpacing.space28),
-            HeaderTitleWIdget(title: 'Upcoming'),
+            HeaderTitleWIdget(title: 'On The Airing'),
             SizedBox(height: AppSpacing.space20),
-            UpcomingMovieList(),
+            OnTheAirTVList(),
             SizedBox(height: AppSpacing.space28),
-            HeaderTitleWIdget(title: 'Now Playing'),
+            HeaderTitleWIdget(title: 'Airing Today'),
             SizedBox(height: AppSpacing.space20),
-            NowPlayingMovieList(),
+            AiringTodayTVList(),
             SizedBox(height: AppSpacing.space28),
             HeaderTitleWIdget(title: 'Popular'),
             SizedBox(height: AppSpacing.space20),
-            PopularMovieList(),
+            PopularTVList(),
           ],
         ),
       ),

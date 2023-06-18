@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/movie_model.dart';
-import '../../favorite_page/view_model/favorite_view_model.dart';
+import '../../favorite/view_model/favorite_view_model.dart';
 import '../../../utils/constant/app_radius.dart';
 import '../../../utils/constant/app_spacing.dart';
 import '../../../utils/widget/app_scaffold.dart';

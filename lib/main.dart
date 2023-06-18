@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'screens/splash_page/view/splash_page.dart';
+import 'screens/splash/view/splash_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

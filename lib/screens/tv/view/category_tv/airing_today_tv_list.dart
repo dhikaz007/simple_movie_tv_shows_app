@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/constant/app_color.dart';
-import '../../../detail_page/view/detail_main.dart';
-import '../../../home_page/view/widget/movie_item_widget.dart';
+import '../../../detail/view/detail_main.dart';
+import '../../../home/view/widget/movie_item_widget.dart';
 import '../../view_model/view_model.dart';
 
 class AiringTodayTVList extends StatelessWidget {

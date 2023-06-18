@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../main_page/main_page.dart';
+import '../../main/main_page.dart';
 import '../../../utils/widget/app_scaffold.dart';
 import '../../../../utils/constant/app_color.dart';
 import '../../../../utils/constant/app_spacing.dart';

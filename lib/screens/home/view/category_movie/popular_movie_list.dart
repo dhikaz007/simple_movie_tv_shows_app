@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../detail_page/view/detail_main.dart';
-import '../../view_model/upcoming_movie_view_model.dart';
 import '../../../../utils/constant/app_color.dart';
+import '../../../detail/view/detail_main.dart';
+import '../../view_model/popular_movie_view_model.dart';
 import '../widget/movie_item_widget.dart';
 
-class UpcomingMovieList extends StatelessWidget {
-  const UpcomingMovieList({super.key});
+class PopularMovieList extends StatelessWidget {
+  const PopularMovieList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UpcomingMovieViewModel>(
+    return Consumer<PopularMovieViewModel>(
       builder: (context, movieValue, child) {
         if (movieValue.isLoading) {
           return const Center(
