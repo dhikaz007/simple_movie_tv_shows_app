@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+
+import '../../../models/tv_model.dart';
+import '../../../repositories/tv_repository.dart';
+
+class PopularTVViewModel extends ChangeNotifier {
+  final TVRepository tvRepository;
+
+  PopularTVViewModel({required this.tvRepository});
+
+  List<TVResults>? _tvResult = [];
+  bool _isLoading = false;
+  String _errorMessage = '';
+
+  List<TVResults>? get tvResult => _tvResult;
+  bool get isLoading => _isLoading;
+  String get errorMessage => _errorMessage;
+
+  Future<void> showPopularTV(BuildContext context) async {
+    _isLoading = true;
+    try {
+      _tvResult = await tvRepository.loadPopularTV();
+    } catch (e) {
+      _errorMessage = e.toString();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          margin: const EdgeInsets.all(8),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          content: Text(
+            '$e',
+            textAlign: TextAlign.justify,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+}
