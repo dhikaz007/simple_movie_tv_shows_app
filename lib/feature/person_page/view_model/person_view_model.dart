@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:simple_movie_tv_shows_app/data/model/people_model.dart';
-import 'package:simple_movie_tv_shows_app/data/repository/people_repository.dart';
+
+import '../../../data/model/people_model.dart';
+import '../../../data/repository/people_repository.dart';
 
 class PersonViewModel extends ChangeNotifier {
   final PeopleRepository peopleRepository;

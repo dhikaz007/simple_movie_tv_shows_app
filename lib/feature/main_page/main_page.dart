@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../home_page/view/home_main.dart';
-import '../person_page/view/person_home_main.dart';
-import '../tv_page/view/tv_home_main.dart';
-import '../favorite_page/view/favorite_main.dart';
 import '../../utils/constant/app_color.dart';
 import '../../utils/constant/app_radius.dart';
 import '../../utils/widget/app_scaffold.dart';
+import '../favorite_page/view/favorite_main.dart';
+import '../home_page/view/home_main.dart';
+import '../person_page/view/person_home_main.dart';
+import '../tv_page/view/tv_home_main.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});

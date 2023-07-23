@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/repository/movie_repository.dart';
 import '../../../data/model/movie_model.dart';
+import '../../../data/repository/movie_repository.dart';
 
 class FavoriteViewModel extends ChangeNotifier {
   final MovieRepository movieRepository;

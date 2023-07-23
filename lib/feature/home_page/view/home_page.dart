@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/widget/app_scaffold.dart';
-import '../../../utils/constant/app_spacing.dart';
 import '../../../utils/constant/app_color.dart';
-import '../../search_page/view/search_main.dart';
+import '../../../utils/constant/app_spacing.dart';
+import '../../../utils/widget/app_scaffold.dart';
+import '../../search_page/view/search_movie_main.dart';
 import 'category_movie/category_movie.dart';
 import 'widget/header_title_widget.dart';
 
@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return const SearchMain();
+                    return const SearchMovieMain();
                   },
                 ),
               );

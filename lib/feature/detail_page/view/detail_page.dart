@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_movie_tv_shows_app/feature/favorite_page/view_model/favorite_view_model.dart';
 
 import '../../../data/model/movie_model.dart';
+import '../../../utils/constant/app_color.dart';
 import '../../../utils/constant/app_radius.dart';
 import '../../../utils/constant/app_spacing.dart';
 import '../../../utils/widget/app_scaffold.dart';
-import '../../../utils/constant/app_color.dart';
+import '../../favorite_page/view_model/favorite_view_model.dart';
 
 class DetailPage extends StatelessWidget {
   final String movieBackdrop;

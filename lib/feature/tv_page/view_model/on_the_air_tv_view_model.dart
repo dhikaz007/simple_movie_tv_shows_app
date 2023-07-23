@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/repository/tv_repository.dart';
 import '../../../data/model/tv_model.dart';
+import '../../../data/repository/tv_repository.dart';
 
 class OnTheAirTVViewModel extends ChangeNotifier {
   final TVRepository tvRepository;

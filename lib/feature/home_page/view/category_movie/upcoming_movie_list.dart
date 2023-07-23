@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../utils/constant/app_color.dart';
 import '../../../detail_page/view/detail_main.dart';
 import '../../view_model/upcoming_movie_view_model.dart';
-import '../../../../utils/constant/app_color.dart';
 import '../widget/movie_item_widget.dart';
 
 class UpcomingMovieList extends StatelessWidget {

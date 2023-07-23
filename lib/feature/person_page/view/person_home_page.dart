@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'person_category/popular_person_list.dart';
 import '../../../utils/constant/app_color.dart';
-import '../../../utils/widget/app_scaffold.dart';
 import '../../../utils/constant/app_spacing.dart';
+import '../../../utils/widget/app_scaffold.dart';
 import '../../home_page/view/widget/header_title_widget.dart';
+import 'person_category/popular_person_list.dart';
 
 class PersonHomePage extends StatelessWidget {
   const PersonHomePage({super.key});

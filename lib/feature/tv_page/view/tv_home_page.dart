@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'category_tv/category_tv.dart';
-import '../../../utils/widget/app_scaffold.dart';
-import '../../../utils/constant/app_spacing.dart';
 import '../../../utils/constant/app_color.dart';
+import '../../../utils/constant/app_spacing.dart';
+import '../../../utils/widget/app_scaffold.dart';
 import '../../home_page/view/widget/header_title_widget.dart';
-import '../../search_page/view/search_main.dart';
+import '../../search_page/view/search_tv_main.dart';
+import 'category_tv/category_tv.dart';
 
 class TVHomePage extends StatelessWidget {
   const TVHomePage({super.key});
@@ -24,7 +24,7 @@ class TVHomePage extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return const SearchMain();
+                    return const SearchTVMain();
                   },
                 ),
               );

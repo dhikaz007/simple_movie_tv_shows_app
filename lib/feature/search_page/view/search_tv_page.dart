@@ -3,21 +3,20 @@ import 'package:provider/provider.dart';
 
 import '../../detail_page/view/detail_main.dart';
 import '../view_model/search_tv_view_model.dart';
-import '../view_model/search_movie_view_model.dart';
 import '../../../utils/constant/app_color.dart';
 import '../../../utils/constant/app_spacing.dart';
 import '../../../utils/widget/app_scaffold.dart';
 import 'widget/search_result_widget.dart';
 import 'widget/search_widget.dart';
 
-class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+class SearchTVPage extends StatefulWidget {
+  const SearchTVPage({super.key});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  State<SearchTVPage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchTVPage> {
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -56,12 +55,11 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
                     onChanged: (value) {
-                      // Search TV
                       searchValue.showSearchTV(query: value);
-                      // Search Movie
-                      //searchValue.showSearchMovie(query: value);
                     },
-                    onSubmitted: (value) {},
+                    onSubmitted: (value) {
+                      searchValue.showSearchTV(query: value);
+                    },
                   );
                 },
               ),
@@ -117,16 +115,9 @@ class _SearchPageState extends State<SearchPage> {
                                       movieRating: searchValue
                                               .tvResult?[index].voteAverage ??
                                           0.0,
-                                      movieReleaseData:
-                                          // Search TV
-                                          searchValue.tvResult?[index]
-                                                  .firstAirDate ??
-                                              DateTime.now(),
-                                      // Search Movie
-                                      // DateTime.parse(
-                                      //     searchValue.tvResult?[index]
-                                      //             .releaseDate ??
-                                      //         ''),
+                                      movieReleaseData: searchValue
+                                              .tvResult?[index].firstAirDate ??
+                                          DateTime.now(),
                                       movieOverview: searchValue
                                               .tvResult?[index].overview ??
                                           '',

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../view_model/person_view_model.dart';
 import '../../../../../utils/constant/app_color.dart';
+import '../../view_model/person_view_model.dart';
 
 class PopularPersonList extends StatelessWidget {
   const PopularPersonList({super.key});

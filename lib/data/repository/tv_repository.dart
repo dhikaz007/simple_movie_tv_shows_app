@@ -1,8 +1,7 @@
-import 'package:simple_movie_tv_shows_app/core/network/search/dio_services_search.dart';
-import 'package:simple_movie_tv_shows_app/core/network/tv_shows/dio_services_tv.dart';
-import 'package:simple_movie_tv_shows_app/data/model/search_tv_model.dart';
-
 import '../../core/network/api_endpoint.dart';
+import '../../core/network/search/dio_services_search.dart';
+import '../../core/network/tv_shows/dio_services_tv.dart';
+import '../model/search_tv_model.dart';
 import '../model/tv_model.dart';
 
 abstract class TVRepository {

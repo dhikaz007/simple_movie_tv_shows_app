@@ -1,6 +1,6 @@
-import '../../core/network/search/dio_services_search.dart';
 import '../../core/network/api_endpoint.dart';
 import '../../core/network/movies/dio_services_movie.dart';
+import '../../core/network/search/dio_services_search.dart';
 import '../model/movie_model.dart';
 import '../model/search_movie_model.dart';
 
