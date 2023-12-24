@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../detail/view/detail_main.dart';
 import '../view_model/search_tv_view_model.dart';
-import '../view_model/search_movie_view_model.dart';
+//import '../view_model/search_movie_view_model.dart';
 import '../../../utils/constant/app_color.dart';
 import '../../../utils/constant/app_spacing.dart';
 import '../../../utils/widget/app_scaffold.dart';
