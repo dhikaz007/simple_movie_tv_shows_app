@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-import 'screens/splash/view/splash_page.dart';
+import 'routes/app_routes.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
+  await SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
     ],
   ).then(
-    (_) => runApp(const MainApp()),
+    (_) => runApp(
+      ModularApp(
+        module: AppRoutes(),
+        child: const MainApp(),
+      ),
+    ),
   );
 }
 
@@ -19,12 +25,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    Modular.setInitialRoute('/');
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         fontFamily: 'Montserrat',
       ),
-      home: const SplashPage(),
+      routerConfig: Modular.routerConfig,
     );
   }
 }
