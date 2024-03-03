@@ -1,7 +1,4 @@
-import 'package:flutter_modular/flutter_modular.dart';
-
-import '../feature/splash/screens/splash_screen.dart';
-import 'home_routes.dart';
+part of 'routes.dart';
 
 class AppRoutes extends Module {
   @override
@@ -11,10 +8,21 @@ class AppRoutes extends Module {
       child: (_) => const SplashScreen(),
       transition: TransitionType.rightToLeft,
     );
+    r.child(
+      '/onboarding',
+      child: (_) => const OnboardingScreen(),
+      transition: TransitionType.rightToLeft,
+    );
 
     r.module(
       '/home',
       module: HomeRoutes(),
+      transition: TransitionType.rightToLeft,
+    );
+
+    r.module(
+      '/auth',
+      module: AuthRoutes(),
       transition: TransitionType.rightToLeft,
     );
   }

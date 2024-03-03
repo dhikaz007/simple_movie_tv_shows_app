@@ -1,11 +1,11 @@
 part of 'routes.dart';
 
-class HomeRoutes extends Module {
+class AuthRoutes extends Module {
   @override
   void routes(r) {
     r.child(
       '/',
-      child: (_) => const MainScreen(),
+      child: (_) => const AuthScreen(),
     );
   }
 }
