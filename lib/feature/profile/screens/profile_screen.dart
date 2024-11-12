@@ -10,6 +10,14 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Profile'),
       ),
+      body: Center(
+        child: ButtonPrimary(
+          label: 'Logout',
+          onPressed: () {
+            Modular.to.navigate('/');
+          },
+        ),
+      ),
     );
   }
 }
