@@ -121,7 +121,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         label: activeIndex != 2 ? 'Continue' : 'Get Started',
                         onPressed: () {
                           if (activeIndex == 2) {
-                            Modular.to.navigate('/auth/');
+                            Modular.to.navigate('/home/');
                           } else {
                             pageController.nextPage(
                               duration: const Duration(milliseconds: 500),

@@ -1,21 +1,26 @@
 name: simple_movie_tv_shows_app
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.0.2 <4.0.0'
+  sdk: ">=3.0.2 <4.0.0"
 
 dependencies:
+  bloc: ^8.1.4
   cached_network_image: ^3.4.1
+  connectivity_plus: ^6.1.0
   dio: ^5.7.0
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_dotenv: ^5.2.1
   flutter_modular: ^6.3.4
-  flutter_svg: ^2.0.10
+  flutter_svg: ^2.0.14
   gap: ^3.0.1
   google_nav_bar: ^5.0.7
+  loader_overlay: ^4.0.3
   pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
@@ -29,6 +34,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icon/
+    - assets/env/
+    - assets/font/
 
 fonts:
   - family: Montserrat

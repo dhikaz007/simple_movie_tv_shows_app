@@ -11,7 +11,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(
-      const Duration(milliseconds: 1500),
+      const Duration(milliseconds: 1200),
       () {
         Modular.to.navigate('/onboarding');
       },
