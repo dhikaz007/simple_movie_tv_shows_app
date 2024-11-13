@@ -37,6 +37,10 @@ class MainApp extends StatelessWidget {
       lazy: true,
       child: GlobalLoaderOverlay(
         overlayColor: AppColor.black.withAlpha(150).withOpacity(.3),
+        transitionBuilder: (child, anim) => ScaleTransition(
+          scale: anim,
+          child: child,
+        ),
         overlayWidgetBuilder: (progress) => Center(
           child: Container(
             color: AppColor.white,
