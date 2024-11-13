@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 
 import '../../../constant/constant.dart';
 import '../../../shared/shared.dart';
+import '../../../utils/utils.dart';
 
 part 'splash_screen.dart';
 part 'onboarding_screen.dart';

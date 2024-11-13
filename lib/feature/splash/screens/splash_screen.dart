@@ -12,8 +12,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(
       const Duration(milliseconds: 1200),
-      () {
-        Modular.to.navigate('/onboarding');
+      () async {
+        bool isFirstTime = await LocalStorage.getfirstLaunchApp();
+        if (!isFirstTime) {
+          Modular.to.navigate('/onboarding');
+        } else {
+          Modular.to.navigate('/auth/');
+        }
       },
     );
     super.initState();
@@ -25,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColor.primary,
       body: Center(
         child: AppText(
-          text: 'MovieTime',
+          text: 'DUMMY',
           size: FontAppSize.font_40,
           weight: FontAppWeight.bold,
           color: AppColor.orange,

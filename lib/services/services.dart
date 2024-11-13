@@ -4,6 +4,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../constant/constant.dart';
 
+part 'response_api.dart';
+
 mixin Services {
   final BaseOptions _baseOptions = BaseOptions(
     baseUrl: UrlConstant.baseUrl,
@@ -21,8 +23,19 @@ mixin Services {
       ),
       InterceptorsWrapper(
         onRequest: (request, handler) {
-          request.headers['Authorization'] = dotenv.env['TMDB_TOKEN_KEY'];
+          request.headers['Authorization'] = 'Bearer ${dotenv.env['TMDB_TOKEN_KEY']}';
           return handler.next(request);
+        },
+        // onResponse: (response, handler) {
+        //   print('ON RESPONSE');
+        //   print(response.toString());
+        //   return handler.next(response);
+        // },
+        onError: (error, handler) {
+          print('ON ERROR');
+          print(error.response?.statusCode);
+
+          return handler.next(error);
         },
       ),
     ]);

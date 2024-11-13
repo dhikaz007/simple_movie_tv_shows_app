@@ -84,35 +84,77 @@ class _SignInScreenState extends State<SignInScreen> {
           },
         ),
         const Gap(16),
-        GestureDetector(
-          onTap: () {
-            featureDisabled();
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            print(state);
+            if (state is AuthLoading) {
+              CustomLoading.showLoad(context);
+            }
+            if (state is! AuthLoading) {
+              CustomLoading.hideLoad(context);
+            }
+            if (state is AuthLogOut) {
+              print('LOGOUT SUCCESS');
+            }
+            if (state is AuthError) {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.error,
+                text: state.err,
+              );
+            }
           },
-          child: const Align(
-            alignment: Alignment.centerRight,
-            child: AppText(
-              text: 'Forgot Password',
-              size: FontAppSize.font_16,
-              weight: FontAppWeight.medium,
-              color: AppColor.white,
+          child: GestureDetector(
+            onTap: () {
+              context.read<AuthCubit>().logout();
+              //featureDisabled();
+            },
+            child: const Align(
+              alignment: Alignment.centerRight,
+              child: AppText(
+                text: 'Forgot Password',
+                size: FontAppSize.font_16,
+                weight: FontAppWeight.medium,
+                color: AppColor.white,
+              ),
             ),
           ),
         ),
         const Gap(24),
-        ButtonPrimary(
-          label: 'Sign In',
-          width: double.maxFinite,
-          height: 44,
-          radius: 20,
-          onPressed: password.isEmpty
-              ? null
-              : () {
-                  if (passwordController.text.isEmpty) {
-                    null;
-                  } else {
-                    Modular.to.navigate('/home/');
-                  }
-                },
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            print(state);
+            if (state is AuthLoading) {
+              CustomLoading.showLoad(context);
+            }
+            if (state is! AuthLoading) {
+              CustomLoading.hideLoad(context);
+            }
+            if (state is AuthAuthenticated) {
+              print('SUCCESS');
+            }
+            if (state is AuthError) {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.error,
+                text: state.err,
+              );
+            }
+          },
+          child: ButtonPrimary(
+            label: 'Sign In',
+            width: double.maxFinite,
+            height: 44,
+            radius: 20,
+            onPressed: () {
+              print(emailController.text);
+              print(passwordController.text);
+              context.read<AuthCubit>().login(
+                  username: emailController.text,
+                  password: passwordController.text);
+              //Modular.to.navigate('/home/');
+            },
+          ),
         ),
         const Gap(20),
         const Center(
