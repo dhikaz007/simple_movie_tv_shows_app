@@ -1,0 +1,1 @@
+part 'account_model.dart';
