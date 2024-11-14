@@ -13,13 +13,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    //context.read<ProfileCubit>().loadProfilte();
     _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primary,
+      backgroundColor: Colors.green,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         physics: const ClampingScrollPhysics(),
@@ -31,7 +32,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      final x = await MovieServices().fetchGenres();
+                      final y = x.data?.genres?.length;
+                      print(y);
+                    },
                     child: SvgPicture.asset(
                       AppIcons.icSearch,
                       colorFilter: const ColorFilter.mode(

@@ -3,15 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 import 'constant/constant.dart';
 import 'feature/auth/cubit/auth_cubit.dart';
+import 'feature/home/cubit_movie/cubit/now_playing_cubit.dart';
+import 'feature/profile/cubit/profile_cubit.dart';
+import 'hive_storage/profile_hive.dart';
 import 'routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: 'assets/env/.env');
+  await Hive.initFlutter();
+  Hive.registerAdapter(ProfileHiveAdapter());
+  await Hive.openBox<ProfileHive>('PROFILE');
   await SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -32,9 +39,12 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Modular.setInitialRoute('/');
-    return BlocProvider(
-      create: (context) => AuthCubit(),
-      lazy: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => ProfileCubit()),
+        BlocProvider(create: (context) => NowPlayingCubit()),
+      ],
       child: GlobalLoaderOverlay(
         overlayColor: AppColor.black.withAlpha(150).withOpacity(.3),
         transitionBuilder: (child, anim) => ScaleTransition(

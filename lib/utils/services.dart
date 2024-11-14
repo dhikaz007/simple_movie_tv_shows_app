@@ -1,10 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
-import '../constant/constant.dart';
-
-part 'response_api.dart';
+part of 'utils.dart';
 
 mixin Services {
   final BaseOptions _baseOptions = BaseOptions(
@@ -16,6 +10,8 @@ mixin Services {
   Future<Dio> dio() async {
     Dio dio = Dio(_baseOptions);
 
+    final sessionId = await LocalStorage.getSessionId();
+
     dio.interceptors.addAll([
       PrettyDioLogger(
         requestBody: true,
@@ -24,7 +20,11 @@ mixin Services {
       ),
       InterceptorsWrapper(
         onRequest: (request, handler) {
-          request.headers['Authorization'] = 'Bearer ${dotenv.env['TMDB_TOKEN_KEY']}';
+          request.headers['Authorization'] =
+              'Bearer ${dotenv.env['TMDB_TOKEN_KEY']}';
+          if (sessionId != null && sessionId.isNotEmpty) {
+            request.queryParameters['session_id'] = sessionId;
+          }
           return handler.next(request);
         },
         // onResponse: (response, handler) {

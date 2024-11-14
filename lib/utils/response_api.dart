@@ -1,4 +1,4 @@
-part of 'services.dart';
+part of 'utils.dart';
 
 class ResponseAPI<T> {
   final T? data;
@@ -16,7 +16,7 @@ class ResponseAPI<T> {
 class PaginationResponseAPI<T> {
   final Dates? dates;
   final int? page;
-  final T? results;
+  final List<T>? results;
   final int? totalPages;
   final int? totalResults;
 
@@ -34,7 +34,7 @@ class PaginationResponseAPI<T> {
           ? Dates.fromJson(json['dates'] as Map<String, dynamic>)
           : null,
       page: json['page'] != null ? json['page'] as int : null,
-      results: json['results'],
+      results: json['results'] != null ? List<T>.from(json['results']) : null,
       totalPages:
           json['total_pages'] != null ? json['total_pages'] as int : null,
       totalResults:

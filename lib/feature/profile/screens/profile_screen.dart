@@ -11,11 +11,31 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('Profile'),
       ),
       body: Center(
-        child: ButtonPrimary(
-          label: 'Logout',
-          onPressed: () {
-            Modular.to.navigate('/');
+        child: BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthLoading) {
+              CustomLoading.showLoad(context);
+            }
+            if (state is! AuthLoading) {
+              CustomLoading.hideLoad(context);
+            }
+            if (state is AuthLogOut) {
+              Modular.to.navigate('/');
+            }
+            if (state is AuthError) {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.error,
+                text: state.err,
+              );
+            }
           },
+          child: ButtonPrimary(
+            label: 'Logout',
+            onPressed: () {
+              context.read<AuthCubit>().logout();
+            },
+          ),
         ),
       ),
     );

@@ -1,7 +1,7 @@
 part of 'models.dart';
 
 class AccountModel {
-  final String? avatar;
+  final Avatar? avatar;
   final int? id;
   final String? iso6391;
   final String? iso31661;
@@ -21,7 +21,7 @@ class AccountModel {
 
   factory AccountModel.fromJson(Map<String, dynamic> json) {
     return AccountModel(
-      avatar: json['avatar'] != null ? json['avatar'] as String : null,
+      avatar: json['avatar'] != null ? Avatar.fromJson(json['avatar']) : null,
       id: json['id'] != null ? json['id'] as int : null,
       iso6391: json['iso_639_1'] != null ? json['iso_639_1'] as String : null,
       iso31661:

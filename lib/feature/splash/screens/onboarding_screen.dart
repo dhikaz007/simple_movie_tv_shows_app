@@ -112,7 +112,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ? 'Download your favorite movies and TV shows to watch them on your journey'
                                 : 'Add your favorite movies and TV shows to your favorites to watch them later',
                         size: FontAppSize.font_16,
-                        weight: FontAppWeight.normal,
                         color: AppColor.white,
                         maxLines: 2,
                       ),

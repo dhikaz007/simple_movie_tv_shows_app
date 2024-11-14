@@ -131,7 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
               CustomLoading.hideLoad(context);
             }
             if (state is AuthAuthenticated) {
-              print('SUCCESS');
+              Modular.to.navigate('/home/');
             }
             if (state is AuthError) {
               QuickAlert.show(
@@ -147,12 +147,9 @@ class _SignInScreenState extends State<SignInScreen> {
             height: 44,
             radius: 20,
             onPressed: () {
-              print(emailController.text);
-              print(passwordController.text);
               context.read<AuthCubit>().login(
                   username: emailController.text,
                   password: passwordController.text);
-              //Modular.to.navigate('/home/');
             },
           ),
         ),

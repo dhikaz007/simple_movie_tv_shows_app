@@ -38,7 +38,7 @@ class AppText extends StatelessWidget {
     super.key,
     required this.text,
     required this.size,
-    required this.weight,
+    this.weight = FontAppWeight.normal,
     required this.color,
     this.maxLines = 1,
     this.align,

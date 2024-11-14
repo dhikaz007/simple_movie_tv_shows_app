@@ -55,13 +55,11 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     replacement: const AppText(
                       text: 'To continue, register your account using email',
                       size: FontAppSize.font_16,
-                      weight: FontAppWeight.normal,
                       color: AppColor.white,
                     ),
                     child: const AppText(
                       text: 'To continue, log in to your account using email',
                       size: FontAppSize.font_16,
-                      weight: FontAppWeight.normal,
                       color: AppColor.white,
                     ),
                   ),

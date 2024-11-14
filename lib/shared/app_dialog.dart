@@ -36,7 +36,6 @@ class AppDialog {
         content: AppText(
           text: message,
           size: FontAppSize.font_16,
-          weight: FontAppWeight.normal,
           color: AppColor.white,
           maxLines: 2,
         ),

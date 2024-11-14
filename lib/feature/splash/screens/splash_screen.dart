@@ -17,7 +17,12 @@ class _SplashScreenState extends State<SplashScreen> {
         if (!isFirstTime) {
           Modular.to.navigate('/onboarding');
         } else {
-          Modular.to.navigate('/auth/');
+          String? token = await LocalStorage.getAccessToken();
+          if (token != null && token.isNotEmpty) {
+            Modular.to.navigate('/home/');
+          } else {
+            Modular.to.navigate('/auth/');
+          }
         }
       },
     );
