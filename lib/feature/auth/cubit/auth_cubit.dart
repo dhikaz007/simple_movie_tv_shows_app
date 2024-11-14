@@ -16,15 +16,11 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthLoading());
 
       await _authServices.fetchToken();
-      final response = await _authServices.fetchLogin(
-          username: username, password: password);
-      if (response.data?.success != true) {
-        emit(const AuthError(err: 'ERROR LOGIN'));
-      } else {
-        final id = await _authServices.fetchSession();
-        await LocalStorage.setSessionId(id: id.data?.sessionId ?? '-');
-        emit(AuthAuthenticated());
-      }
+      await _authServices.fetchLogin(username: username, password: password);
+
+      final id = await _authServices.fetchSession();
+      await LocalStorage.setSessionId(id: id.data?.sessionId ?? '-');
+      emit(AuthAuthenticated());
     } catch (e) {
       emit(AuthError(err: e.toString()));
     }

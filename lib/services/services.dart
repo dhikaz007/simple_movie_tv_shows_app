@@ -20,6 +20,7 @@ mixin Services {
       PrettyDioLogger(
         requestBody: true,
         requestHeader: true,
+        compact: false,
       ),
       InterceptorsWrapper(
         onRequest: (request, handler) {
