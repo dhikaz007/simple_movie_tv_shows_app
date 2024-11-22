@@ -1,13 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart'
     hide ModularWatchExtension;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../constant/constant.dart';
 import '../../../extensions/extensions.dart';
 import '../../../shared/shared.dart';
+import '../movie/cubit/now_playing_cubit.dart';
 import '../movie/domain/models/models.dart';
 import '../movie/domain/services/services.dart';
 import 'widgets/widgets.dart';

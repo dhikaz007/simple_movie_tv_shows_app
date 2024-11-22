@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 import 'constant/constant.dart';
@@ -25,6 +26,7 @@ void main() async {
   Hive.registerAdapter(ProfileHiveAdapter());
   await Hive.openBox<ProfileHive>('PROFILE');
   await FkUserAgent.init();
+  await initializeDateFormatting('id');
 
   final region = WidgetsBinding.instance.platformDispatcher.locale.countryCode;
   await LocalStorage.setRegion(region: region ?? 'EN');

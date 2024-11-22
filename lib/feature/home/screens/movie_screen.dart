@@ -15,6 +15,7 @@ class _MovieScreenState extends State<MovieScreen> {
   void initState() {
     super.initState();
     _loadGenres();
+    context.read<NowPlayingCubit>().nowPlaying(1);
   }
 
   @override
@@ -46,7 +47,7 @@ class _MovieScreenState extends State<MovieScreen> {
       mainAxisSize: MainAxisSize.min,
       children: [
         HeaderTitle(
-          label: 'Genres',
+          label: 'Discover Genres',
           onTap: () async {
             Modular.to.pushNamed('/movie/discover');
           },
@@ -94,44 +95,39 @@ class _MovieScreenState extends State<MovieScreen> {
             child: CircularProgressIndicator(),
           ),
         ),
-        const Gap(12),
-        Flexible(
-          child: GridView.count(
-            scrollDirection: Axis.horizontal,
-            //itemCount: 12,
-            //gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-
-            //),
-            // itemBuilder: (context, index) {
-            //   return Container(
-            //     alignment: Alignment.center,
-            //     width: 120,
-            //     height: 200,
-            //     color: AppColor.grey2,
-            //     child: AppText(
-            //         text: 'Index ${index + 1}',
-            //         size: FontAppSize.font_12,
-            //         color: AppColor.black),
-            //   );
-            // },
-            children: List.generate(10, (gen) {
-              return Container(
-                alignment: Alignment.center,
-                width: 120,
-                height: 120,
-                color: AppColor.grey2,
-                child: AppText(
-                    text: 'Index ${gen + 1}',
-                    size: FontAppSize.font_12,
-                    color: AppColor.black),
-              );
-            }),
-          ),
+        const Gap(20),
+        HeaderTitle(
+          label: 'Now Playing',
+          onTap: () {},
         ),
+        const Gap(12),
+        BlocBuilder<NowPlayingCubit, NowPlayingState>(
+          builder: (context, state) {
+            if (state.status == MovieStatusState.loading) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColor.red,
+                ),
+              );
+            }
+            return Expanded(
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: state.listData.length,
+                separatorBuilder: (context, index) => const Gap(12),
+                itemBuilder: (context, index) {
+                  final nowMovie = state.listData[index];
+                  return MovieCard(
+                    title: nowMovie.originalTitle ?? '-',
+                    date: nowMovie.releaseDate ?? DateTime.now(),
+                    vote: nowMovie.voteAverage ?? 0.0,
+                    poster: nowMovie.posterPath ?? '-',
+                  );
+                },
+              ),
+            );
+          },
+        )
       ],
     );
   }
