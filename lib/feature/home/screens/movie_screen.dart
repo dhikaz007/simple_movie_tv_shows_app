@@ -26,6 +26,9 @@ class _MovieScreenState extends State<MovieScreen> {
 
   void _loadGenres() async {
     try {
+      // final genres = await Isolate.run(() async {
+      //   return response;
+      // });
       final response = await MovieServices().fetchGenres();
       _listGenre.value = response.data?.genres ?? [];
     } on DioException catch (e) {
@@ -36,17 +39,6 @@ class _MovieScreenState extends State<MovieScreen> {
     }
   }
 
-  void _onScroll() {
-    final state = context.read<NowPlayingCubit>().state;
-    if (state.status == MovieStatusState.loadMore ||
-        state.status == MovieStatusState.failure) return;
-
-    final nextPage = (state.pagination.page ?? 0) + 1;
-    context.read<NowPlayingCubit>().nowPlayingMovie(nextPage);
-
-    print('SCROLLED $nextPage');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,7 +47,9 @@ class _MovieScreenState extends State<MovieScreen> {
       children: [
         HeaderTitle(
           label: 'Genres',
-          onTap: () {},
+          onTap: () async {
+            Modular.to.pushNamed('/movie/discover');
+          },
         ),
         const Gap(12),
         ValueListenableBuilder(
@@ -67,9 +61,10 @@ class _MovieScreenState extends State<MovieScreen> {
               return ValueListenableBuilder(
                 valueListenable: _listGenre,
                 builder: (context, value, child) => child!,
-                child: SizedBox(
-                  width: double.maxFinite,
-                  height: 32,
+                child: Container(
+                  constraints: const BoxConstraints.expand(
+                    height: 32,
+                  ),
                   child: ListView.separated(
                     itemCount: _listGenre.value.take(5).length,
                     separatorBuilder: (context, index) => const Gap(12),
@@ -97,6 +92,44 @@ class _MovieScreenState extends State<MovieScreen> {
           },
           child: const Center(
             child: CircularProgressIndicator(),
+          ),
+        ),
+        const Gap(12),
+        Flexible(
+          child: GridView.count(
+            scrollDirection: Axis.horizontal,
+            //itemCount: 12,
+            //gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+
+            //),
+            // itemBuilder: (context, index) {
+            //   return Container(
+            //     alignment: Alignment.center,
+            //     width: 120,
+            //     height: 200,
+            //     color: AppColor.grey2,
+            //     child: AppText(
+            //         text: 'Index ${index + 1}',
+            //         size: FontAppSize.font_12,
+            //         color: AppColor.black),
+            //   );
+            // },
+            children: List.generate(10, (gen) {
+              return Container(
+                alignment: Alignment.center,
+                width: 120,
+                height: 120,
+                color: AppColor.grey2,
+                child: AppText(
+                    text: 'Index ${gen + 1}',
+                    size: FontAppSize.font_12,
+                    color: AppColor.black),
+              );
+            }),
           ),
         ),
       ],

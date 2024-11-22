@@ -13,4 +13,6 @@ part 'app_dialog.dart';
 part 'app_text.dart';
 part 'app_textfield.dart';
 part 'button_primary.dart';
+part 'default_background.dart';
 part 'main_screen.dart';
+part 'pagination_fab.dart';

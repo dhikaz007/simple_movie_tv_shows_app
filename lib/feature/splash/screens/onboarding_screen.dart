@@ -86,7 +86,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             width: 10,
                             decoration: BoxDecoration(
                               color: activeIndex == index
-                                  ? AppColor.orange
+                                  ? AppColor.red
                                   : AppColor.grey,
                               shape: BoxShape.circle,
                             ),

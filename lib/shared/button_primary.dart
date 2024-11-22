@@ -23,8 +23,8 @@ class ButtonPrimary extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        disabledBackgroundColor: AppColor.orange.withOpacity(.5),
-        backgroundColor: AppColor.orange,
+        disabledBackgroundColor: AppColor.red.withOpacity(.5),
+        backgroundColor: AppColor.red,
         fixedSize: Size(width ?? double.maxFinite, height ?? 44),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius ?? 20),

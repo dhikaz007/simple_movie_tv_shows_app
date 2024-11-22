@@ -22,11 +22,10 @@ final class AuthServices with Services implements AuthRepository {
       if (response.statusCode == 200) {
         final datas = TokenResponse.fromJson(data);
         await LocalStorage.setAccessToken(token: datas.requestToken ?? '-');
-        print('INI DATA');
-        print(datas);
-        print('SAMPE SINI');
+        LoggerHelper.info(datas.toString());
       }
     } on DioException catch (e) {
+      LoggerHelper.error(e.msgDioErr());
       throw e.msgDioErr();
     }
   }
@@ -53,13 +52,12 @@ final class AuthServices with Services implements AuthRepository {
       final data = response.data;
       if (response.statusCode == 200) {
         final datas = TokenResponse.fromJson(data);
-        print('INI DATA');
-        print(datas);
-        print('SAMPE SINI');
+        LoggerHelper.info(datas.toString());
         return ResponseAPI.fromJson(datas);
       }
       throw data['status_message'];
     } on DioException catch (e) {
+      LoggerHelper.error(e.msgDioErr());
       throw e.msgDioErr();
     }
   }
@@ -79,13 +77,12 @@ final class AuthServices with Services implements AuthRepository {
       final data = response.data;
       if (response.statusCode == 200) {
         final datas = SessionModel.fromJson(data);
-        print('INI DATA');
-        print(datas);
-        print('SAMPE SINI');
+        LoggerHelper.info(datas.toString());
         return ResponseAPI.fromJson(datas);
       }
       throw data['status_message'];
     } on DioException catch (e) {
+      LoggerHelper.error(e.msgDioErr());
       throw e.msgDioErr();
     }
   }
@@ -104,12 +101,13 @@ final class AuthServices with Services implements AuthRepository {
 
       final data = response.data;
       if (response.statusCode == 200) {
-        final datas =
-            ResponseAPI.fromJson(data['success'] as bool);
+        final datas = ResponseAPI.fromJson(data['success'] as bool);
+        LoggerHelper.info(datas.toString());
         return datas;
       }
       throw data['status_message'];
     } on DioException catch (e) {
+      LoggerHelper.error(e.msgDioErr());
       throw e.msgDioErr();
     }
   }

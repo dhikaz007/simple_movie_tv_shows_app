@@ -106,8 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
           },
           child: GestureDetector(
             onTap: () {
-              context.read<AuthCubit>().logout();
-              //featureDisabled();
+              // context.read<AuthCubit>().logout();
             },
             child: const Align(
               alignment: Alignment.centerRight,

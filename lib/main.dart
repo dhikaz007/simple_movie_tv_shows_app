@@ -1,3 +1,4 @@
+import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,10 +9,14 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 import 'constant/constant.dart';
 import 'feature/auth/cubit/auth_cubit.dart';
-import 'feature/home/cubit_movie/cubit/now_playing_cubit.dart';
+import 'feature/home/movie/cubit/now_playing_cubit.dart';
+import 'feature/home/movie/cubit/popular_cubit.dart';
+import 'feature/home/movie/cubit/top_rated_cubit.dart';
+import 'feature/home/movie/cubit/upcoming_cubit.dart';
 import 'feature/profile/cubit/profile_cubit.dart';
 import 'hive_storage/profile_hive.dart';
 import 'routes/routes.dart';
+import 'utils/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +24,10 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProfileHiveAdapter());
   await Hive.openBox<ProfileHive>('PROFILE');
+  await FkUserAgent.init();
+
+  final region = WidgetsBinding.instance.platformDispatcher.locale.countryCode;
+  await LocalStorage.setRegion(region: region ?? 'EN');
   await SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -44,6 +53,9 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => ProfileCubit()),
         BlocProvider(create: (context) => NowPlayingCubit()),
+        BlocProvider(create: (context) => PopularCubit()),
+        BlocProvider(create: (context) => TopRatedCubit()),
+        BlocProvider(create: (context) => UpcomingCubit()),
       ],
       child: GlobalLoaderOverlay(
         overlayColor: AppColor.black.withAlpha(150).withOpacity(.3),

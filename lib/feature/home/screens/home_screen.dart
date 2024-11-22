@@ -20,73 +20,75 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        physics: const ClampingScrollPhysics(),
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () async {
-                      final x = await MovieServices().fetchGenres();
-                      final y = x.data?.genres?.length;
-                      print(y);
-                    },
-                    child: SvgPicture.asset(
-                      AppIcons.icSearch,
-                      colorFilter: const ColorFilter.mode(
-                        AppColor.white,
-                        BlendMode.srcIn,
+      backgroundColor: AppColor.white,
+      body: DefaultBackground(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          physics: const ClampingScrollPhysics(),
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        final x = await MovieServices().fetchGenres();
+                        final y = x.data?.genres?.length;
+                        print(y);
+                      },
+                      child: SvgPicture.asset(
+                        AppIcons.icSearch,
+                        colorFilter: const ColorFilter.mode(
+                          AppColor.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                  const AppText(
-                    text: 'MovieTime',
-                    size: FontAppSize.font_18,
-                    weight: FontAppWeight.bold,
-                    color: AppColor.orange,
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      AppIcons.icNotification,
-                      colorFilter: const ColorFilter.mode(
-                        AppColor.white,
-                        BlendMode.srcIn,
+                    const AppText(
+                      text: 'MovieTime',
+                      size: FontAppSize.font_18,
+                      weight: FontAppWeight.bold,
+                      color: AppColor.red,
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: SvgPicture.asset(
+                        AppIcons.icNotification,
+                        colorFilter: const ColorFilter.mode(
+                          AppColor.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const Gap(20),
-              TabBar(
-                controller: _tabController,
-                physics: const NeverScrollableScrollPhysics(),
-                dividerColor: Colors.transparent,
-                tabs: const [
-                  Tab(text: 'Movies'),
-                  Tab(text: 'TV Shows'),
-                ],
-              ),
-              const Gap(20),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width,
-                height: MediaQuery.sizeOf(context).height / 2,
-                child: TabBarView(
-                  controller: _tabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: const [
-                    MovieScreen(),
-                    TvShowsScreen(),
                   ],
                 ),
-              )
-            ],
+                const Gap(20),
+                TabBar(
+                  controller: _tabController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  dividerColor: Colors.transparent,
+                  tabs: const [
+                    Tab(text: 'Movies'),
+                    Tab(text: 'TV Shows'),
+                  ],
+                ),
+                const Gap(20),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  height: MediaQuery.sizeOf(context).height / 2,
+                  child: TabBarView(
+                    controller: _tabController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: const [
+                      MovieScreen(),
+                      TvShowsScreen(),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

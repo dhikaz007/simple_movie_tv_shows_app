@@ -22,24 +22,24 @@ class _MainScreenState extends State<MainScreen> {
     return ValueListenableBuilder(
       valueListenable: activeIndex,
       builder: (_, __, ___) => Scaffold(
-        backgroundColor: AppColor.primary,
+        extendBody: true,
+        resizeToAvoidBottomInset: false,
+        backgroundColor: AppColor.grey,
         body: IndexedStack(
           index: activeIndex.value,
           children: pages,
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: AppColor.grey.withOpacity(.5),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
-            ),
+        bottomNavigationBar: ClipRRect(
+          clipBehavior: Clip.hardEdge,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
           ),
           child: NavigationBar(
             selectedIndex: activeIndex.value,
             indicatorShape: null,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
+            backgroundColor: AppColor.grey.withAlpha(150),
+            elevation: 2,
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             indicatorColor: Colors.transparent,
             onDestinationSelected: (value) => activeIndex.value = value,
@@ -59,7 +59,7 @@ class _MainScreenState extends State<MainScreen> {
                   height: 28,
                   width: 28,
                   colorFilter: const ColorFilter.mode(
-                    AppColor.orange,
+                    AppColor.red,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -80,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
                   height: 28,
                   width: 28,
                   colorFilter: const ColorFilter.mode(
-                    AppColor.orange,
+                    AppColor.red,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -101,7 +101,7 @@ class _MainScreenState extends State<MainScreen> {
                   height: 28,
                   width: 28,
                   colorFilter: const ColorFilter.mode(
-                    AppColor.orange,
+                    AppColor.red,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -122,7 +122,7 @@ class _MainScreenState extends State<MainScreen> {
                   height: 28,
                   width: 28,
                   colorFilter: const ColorFilter.mode(
-                    AppColor.orange,
+                    AppColor.red,
                     BlendMode.srcIn,
                   ),
                 ),

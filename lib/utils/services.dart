@@ -16,7 +16,6 @@ mixin Services {
       PrettyDioLogger(
         requestBody: true,
         requestHeader: true,
-        compact: false,
       ),
       InterceptorsWrapper(
         onRequest: (request, handler) {
@@ -28,14 +27,11 @@ mixin Services {
           return handler.next(request);
         },
         // onResponse: (response, handler) {
-        //   print('ON RESPONSE');
-        //   print(response.toString());
+        //   LoggerHelper.info(response.data.toString());
         //   return handler.next(response);
         // },
         onError: (error, handler) {
-          print('ON ERROR');
-          print(error.response?.statusCode);
-
+          LoggerHelper.error(error.response?.toString() ?? '-');
           return handler.next(error);
         },
       ),

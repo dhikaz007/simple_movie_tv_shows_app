@@ -6,7 +6,9 @@ class ResponseAPI<T> {
   const ResponseAPI({this.data});
 
   factory ResponseAPI.fromJson(T? json) {
-    return ResponseAPI(data: json);
+    return ResponseAPI(
+      data: json,
+    );
   }
 
   @override

@@ -25,5 +25,11 @@ class AppRoutes extends Module {
       module: AuthRoutes(),
       transition: TransitionType.rightToLeft,
     );
+
+    r.module(
+      '/movie',
+      module: MovieRoutes(),
+      transition: TransitionType.downToUp,
+    );
   }
 }

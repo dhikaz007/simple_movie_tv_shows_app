@@ -84,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: CheckboxListTile(
             contentPadding: EdgeInsets.zero,
             controlAffinity: ListTileControlAffinity.leading,
-            activeColor: AppColor.orange,
+            activeColor: AppColor.red,
             checkColor: AppColor.white,
             visualDensity: VisualDensity.compact,
             title: RichText(
@@ -99,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     text: 'Terms of Use ',
                     style: TextStyle(
                       fontSize: 14,
-                      color: AppColor.orange,
+                      color: AppColor.red,
                     ),
                   ),
                   TextSpan(
@@ -113,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     text: 'Privacy Policy ',
                     style: TextStyle(
                       fontSize: 14,
-                      color: AppColor.orange,
+                      color: AppColor.red,
                     ),
                   ),
                 ],

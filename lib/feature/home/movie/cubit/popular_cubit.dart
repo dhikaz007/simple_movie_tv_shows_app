@@ -3,17 +3,17 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../constant/constant.dart';
 import '../../../../utils/utils.dart';
-import '../../domain/models/models.dart';
-import '../../domain/services/services.dart';
+import '../domain/models/models.dart';
+import '../domain/services/services.dart';
 
-part 'now_playing_state.dart';
+part 'popular_state.dart';
 
-class NowPlayingCubit extends Cubit<NowPlayingState> {
-  NowPlayingCubit() : super(const NowPlayingState());
+class PopularCubit extends Cubit<PopularState> {
+  PopularCubit() : super(const PopularState());
 
   final MovieServices _movieServices = MovieServices();
 
-  void nowPlayingMovie(int? page) async {
+  void popular(int? page) async {
     try {
       if (state.status == MovieStatusState.loading ||
           state.status == MovieStatusState.loadMore) return;
@@ -39,6 +39,6 @@ class NowPlayingCubit extends Cubit<NowPlayingState> {
   }
 
   void reset() {
-    emit(const NowPlayingState());
+    emit(const PopularState());
   }
 }

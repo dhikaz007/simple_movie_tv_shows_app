@@ -79,15 +79,15 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       indicator: BoxDecoration(
                         color: AppColor.black2,
                         border: const Border(
-                          top: BorderSide(color: AppColor.orange),
-                          bottom: BorderSide(color: AppColor.orange),
-                          left: BorderSide(color: AppColor.orange),
-                          right: BorderSide(color: AppColor.orange),
+                          top: BorderSide(color: AppColor.red),
+                          bottom: BorderSide(color: AppColor.red),
+                          left: BorderSide(color: AppColor.red),
+                          right: BorderSide(color: AppColor.red),
                         ),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       unselectedLabelColor: AppColor.grey2,
-                      labelColor: AppColor.orange,
+                      labelColor: AppColor.red,
                       labelStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

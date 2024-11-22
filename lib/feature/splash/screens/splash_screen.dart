@@ -13,8 +13,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(milliseconds: 1200),
       () async {
-        bool isFirstTime = await LocalStorage.getfirstLaunchApp();
-        if (!isFirstTime) {
+        String? isFirstTime = await LocalStorage.getfirstLaunchApp();
+        if (isFirstTime == null) {
           Modular.to.navigate('/onboarding');
         } else {
           String? token = await LocalStorage.getAccessToken();
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
           text: 'DUMMY',
           size: FontAppSize.font_40,
           weight: FontAppWeight.bold,
-          color: AppColor.orange,
+          color: AppColor.red,
         ),
       ),
     );

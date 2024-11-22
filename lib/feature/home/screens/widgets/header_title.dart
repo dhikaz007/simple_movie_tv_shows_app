@@ -25,7 +25,7 @@ class HeaderTitle extends StatelessWidget {
           child: const AppText(
             text: 'See all',
             size: FontAppSize.font_14,
-            color: AppColor.orange,
+            color: AppColor.red,
           ),
         ),
       ],
