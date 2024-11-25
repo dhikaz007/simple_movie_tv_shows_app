@@ -28,7 +28,7 @@ class MovieCard extends StatelessWidget {
               maxHeight: 220,
             ),
             decoration: BoxDecoration(
-              color: AppColor.grey2,
+              color: Colors.transparent,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Stack(
@@ -36,9 +36,12 @@ class MovieCard extends StatelessWidget {
                 Positioned.fill(
                   child: CachedNetworkImage(
                     imageUrl: '${UrlConstant.baseUrlImageOriginal}$poster',
+                    filterQuality: FilterQuality.high,
                     progressIndicatorBuilder: (context, url, progress) =>
                         Center(
                       child: CircularProgressIndicator.adaptive(
+                          valueColor:
+                              const AlwaysStoppedAnimation(AppColor.red),
                           value: progress.progress),
                     ),
                     errorWidget: (context, url, error) => const Icon(
@@ -51,13 +54,14 @@ class MovieCard extends StatelessWidget {
                 ),
                 Positioned(
                   top: 0,
+                  right: 0,
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: const BoxDecoration(
                       color: AppColor.white,
                       borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
                       ),
                     ),
                     child: Row(

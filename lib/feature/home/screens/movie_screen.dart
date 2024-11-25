@@ -9,34 +9,58 @@ class MovieScreen extends StatefulWidget {
 
 class _MovieScreenState extends State<MovieScreen> {
   final ValueNotifier<List<Genres>> _listGenre = ValueNotifier([]);
-  final ValueNotifier<bool> _isLoading = ValueNotifier(true);
+  final ValueNotifier<bool> _loadingGenre = ValueNotifier(true);
+  final ValueNotifier<List<ResultsModel>> _listNowMovie = ValueNotifier([]);
+  final ValueNotifier<bool> _loadingNowMovie = ValueNotifier(true);
 
   @override
   void initState() {
     super.initState();
-    _loadGenres();
-    context.read<NowPlayingCubit>().nowPlaying(1);
+    initialize();
   }
 
   @override
   void dispose() {
     _listGenre.dispose();
-    _isLoading.dispose();
+    _loadingGenre.dispose();
+    _loadingNowMovie.dispose();
+    _listNowMovie.dispose();
     super.dispose();
   }
 
-  void _loadGenres() async {
+  void initialize() async {
+    final completer = Completer<void>();
+    await Future.wait([
+      _loadGenres(),
+      _loadNowPlayingMovie(),
+    ]).then((_) => completer.complete());
+
+    await completer.future;
+  }
+
+  Future<void> _loadGenres() async {
     try {
-      // final genres = await Isolate.run(() async {
-      //   return response;
-      // });
+      _loadingGenre.value = true;
       final response = await MovieServices().fetchGenres();
       _listGenre.value = response.data?.genres ?? [];
     } on DioException catch (e) {
       if (!mounted) return;
       AppDialog.showSnackbar(context, e.msgDioErr(), SnackBarStatus.failure);
     } finally {
-      _isLoading.value = false;
+      _loadingGenre.value = false;
+    }
+  }
+
+  Future<void> _loadNowPlayingMovie() async {
+    try {
+      _loadingNowMovie.value = true;
+      final response = await MovieServices().fetchNowPlaying(1);
+      _listNowMovie.value = response.results ?? [];
+    } on DioException catch (e) {
+      if (!mounted) return;
+      AppDialog.showSnackbar(context, e.msgDioErr(), SnackBarStatus.failure);
+    } finally {
+      _loadingNowMovie.value = false;
     }
   }
 
@@ -54,7 +78,7 @@ class _MovieScreenState extends State<MovieScreen> {
         ),
         const Gap(12),
         ValueListenableBuilder(
-          valueListenable: _isLoading,
+          valueListenable: _loadingGenre,
           builder: (context, value, child) {
             if (value == true) {
               return child!;
@@ -101,32 +125,52 @@ class _MovieScreenState extends State<MovieScreen> {
           onTap: () {},
         ),
         const Gap(12),
-        BlocBuilder<NowPlayingCubit, NowPlayingState>(
-          builder: (context, state) {
-            if (state.status == MovieStatusState.loading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColor.red,
+        ValueListenableBuilder(
+          valueListenable: _loadingNowMovie,
+          builder: (context, loadingNowMovie, child) {
+            if (loadingNowMovie == true) {
+              return child!;
+            } else {
+              return ValueListenableBuilder(
+                valueListenable: _listNowMovie,
+                builder: (context, nowMovie, child) => nowMovie.isEmpty
+                    ? const Center(
+                        child: AppText(
+                          text: 'Data Empty',
+                          size: FontAppSize.font_14,
+                          color: AppColor.black,
+                        ),
+                      )
+                    : child!,
+                child: Expanded(
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _listNowMovie.value.length,
+                    separatorBuilder: (context, index) => const Gap(12),
+                    itemBuilder: (context, index) {
+                      final nowMovie = _listNowMovie.value[index];
+                      return GestureDetector(
+                        onTap: () {
+                          print(nowMovie.originalTitle);
+                        },
+                        child: MovieCard(
+                          title: nowMovie.originalTitle ?? '-',
+                          date: nowMovie.releaseDate ?? DateTime.now(),
+                          vote: nowMovie.voteAverage ?? 0.0,
+                          poster: nowMovie.posterPath ?? '-',
+                        ),
+                      );
+                    },
+                  ),
                 ),
               );
             }
-            return Expanded(
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: state.listData.length,
-                separatorBuilder: (context, index) => const Gap(12),
-                itemBuilder: (context, index) {
-                  final nowMovie = state.listData[index];
-                  return MovieCard(
-                    title: nowMovie.originalTitle ?? '-',
-                    date: nowMovie.releaseDate ?? DateTime.now(),
-                    vote: nowMovie.voteAverage ?? 0.0,
-                    poster: nowMovie.posterPath ?? '-',
-                  );
-                },
-              ),
-            );
           },
+          child: const Center(
+            child: CircularProgressIndicator(
+              color: AppColor.red,
+            ),
+          ),
         )
       ],
     );
