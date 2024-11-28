@@ -39,9 +39,8 @@ class ResultsModel {
       backdropPath: json['backdrop_path'] != null
           ? json['backdrop_path'] as String
           : null,
-      genreIds: json['genre_ids'] != null
-          ? List<int>.from(json['genre_ids'])
-          : null,
+      genreIds:
+          json['genre_ids'] != null ? List<int>.from(json['genre_ids']) : null,
       id: json['id'] != null ? json['id'] as int : null,
       originalLanguage: json['original_language'] != null
           ? json['original_language'] as String
@@ -54,7 +53,7 @@ class ResultsModel {
           json['popularity'] != null ? json['popularity'] as double : null,
       posterPath:
           json['poster_path'] != null ? json['poster_path'] as String : null,
-      releaseDate: json['release_date'] != null
+      releaseDate: (json['release_date'] != null && json['release_date'] != "")
           ? DateTime.parse(json['release_date'] as String)
           : null,
       title: json['title'] != null ? json['title'] as String : null,

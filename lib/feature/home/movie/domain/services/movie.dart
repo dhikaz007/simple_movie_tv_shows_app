@@ -12,6 +12,11 @@ sealed class MovieRepository {
     bool? includeAdult = false,
     String? year,
   });
+  Future<PaginationResponseAPI<ResultsModel>> fetchDiscover({
+    List<int?>? withGenre,
+    int? page,
+    bool? includeAdult = false,
+  });
 }
 
 final class MovieServices with Services implements MovieRepository {
@@ -185,11 +190,11 @@ final class MovieServices with Services implements MovieRepository {
       final region = await LocalStorage.getRegion();
 
       final params = {
-        "language": "en_US",
-        "query": query,
+        "language": "en-US",
+        "query": query.toLowerCase(),
         "page": page,
         "region": region,
-        "year": year,
+        //"year": year,
       };
 
       Response response = await http.get(
@@ -205,6 +210,46 @@ final class MovieServices with Services implements MovieRepository {
         LoggerHelper.info(data['results'].toString());
         return PaginationResponseAPI<ResultsModel>.fromJson(data);
       }
+      throw data['status_message'];
+    } on DioException catch (e) {
+      LoggerHelper.error(e.msgDioErr());
+      throw e.msgDioErr();
+    }
+  }
+
+  @override
+  Future<PaginationResponseAPI<ResultsModel>> fetchDiscover({
+    List<int?>? withGenre,
+    int? page,
+    bool? includeAdult = false,
+  }) async {
+    try {
+      final region = await LocalStorage.getRegion();
+
+      Dio http = await dio();
+
+      final queryParams = {
+        "page": page,
+        "language": "en-US",
+        "include_adult": includeAdult,
+        "region": region,
+        "with_genres": withGenre?.join(', '),
+      };
+
+      Response response = await http.get(
+        '/discover/movie',
+        queryParameters: queryParams,
+      );
+
+      final data = response.data;
+      if (response.statusCode == 200) {
+        data['results'] = (data['results'] as List)
+            .map((e) => ResultsModel.fromJson(e))
+            .toList();
+        LoggerHelper.info(data['results'].toString());
+        return PaginationResponseAPI<ResultsModel>.fromJson(data);
+      }
+
       throw data['status_message'];
     } on DioException catch (e) {
       LoggerHelper.error(e.msgDioErr());

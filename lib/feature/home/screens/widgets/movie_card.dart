@@ -34,23 +34,8 @@ class MovieCard extends StatelessWidget {
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: CachedNetworkImage(
-                    imageUrl: '${UrlConstant.baseUrlImageOriginal}$poster',
-                    filterQuality: FilterQuality.high,
-                    progressIndicatorBuilder: (context, url, progress) =>
-                        Center(
-                      child: CircularProgressIndicator.adaptive(
-                          valueColor:
-                              const AlwaysStoppedAnimation(AppColor.red),
-                          value: progress.progress),
-                    ),
-                    errorWidget: (context, url, error) => const Icon(
-                      Icons.error_rounded,
-                      color: AppColor.white,
-                      size: 28,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
+                  child: CachedImage(
+                      imageUrl: '${UrlConstant.baseUrlImageOriginal}$poster'),
                 ),
                 Positioned(
                   top: 0,

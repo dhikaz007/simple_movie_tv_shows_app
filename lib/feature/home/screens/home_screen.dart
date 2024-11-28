@@ -9,6 +9,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late final TabController _tabController;
+  final String _searchValue = '';
 
   @override
   void initState() {
@@ -32,19 +33,54 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                      onTap: () async {
-                        final x = await MovieServices().fetchGenres();
-                        final y = x.data?.genres?.length;
-                        print(y);
-                      },
-                      child: SvgPicture.asset(
+                    PopupMenuButton<String>(
+                      initialValue: _searchValue,
+                      icon: SvgPicture.asset(
                         AppIcons.icSearch,
                         colorFilter: const ColorFilter.mode(
                           AppColor.white,
                           BlendMode.srcIn,
                         ),
                       ),
+                      color: AppColor.white,
+                      iconColor: AppColor.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      onSelected: (value) {
+                        print(value);
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 'Movies',
+                          onTap: () {
+                            Modular.to.pushNamed('/movie/search');
+                          },
+                          child: const AppText(
+                            text: 'Movies',
+                            size: FontAppSize.font_12,
+                            color: AppColor.black,
+                            weight: FontAppWeight.medium,
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'TV',
+                          child: AppText(
+                            text: 'TV',
+                            size: FontAppSize.font_12,
+                            color: AppColor.black,
+                            weight: FontAppWeight.medium,
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'People',
+                          child: AppText(
+                            text: 'People',
+                            size: FontAppSize.font_12,
+                            color: AppColor.black,
+                            weight: FontAppWeight.medium,
+                          ),
+                        ),
+                      ],
                     ),
                     const AppText(
                       text: 'MovieTime',

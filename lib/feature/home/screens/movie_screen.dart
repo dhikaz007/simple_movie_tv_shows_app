@@ -151,7 +151,8 @@ class _MovieScreenState extends State<MovieScreen> {
                       final nowMovie = _listNowMovie.value[index];
                       return GestureDetector(
                         onTap: () {
-                          print(nowMovie.originalTitle);
+                          Modular.to
+                              .pushNamed('/movie/detail', arguments: nowMovie);
                         },
                         child: MovieCard(
                           title: nowMovie.originalTitle ?? '-',

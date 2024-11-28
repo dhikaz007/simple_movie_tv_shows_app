@@ -5,51 +5,50 @@ import '../../../../utils/utils.dart';
 import '../domain/models/models.dart';
 import '../domain/services/services.dart';
 
-part 'search_state.dart';
+part 'discover_state.dart';
 
-class SearchCubit extends Cubit<SearchState> {
-  SearchCubit() : super(const SearchState());
+class DiscoverCubit extends Cubit<DiscoverState> {
+  DiscoverCubit() : super(const DiscoverState());
 
   final MovieServices _movieServices = MovieServices();
 
-  void search({
-    required String query,
+  void discover({
+    List<int?>? withGenre,
     int? page,
     bool? includeAdult = false,
     String? year,
   }) async {
     try {
-      if (state.status == SearchStatus.loading ||
-          state.status == SearchStatus.loadMore) return;
+      if (state.status == DiscoverStatus.loading ||
+          state.status == DiscoverStatus.loadMore) return;
 
       if (page == 1) {
-        emit(state.copyWith(status: SearchStatus.loading, loadMore: false));
+        emit(state.copyWith(status: DiscoverStatus.loading, loadMore: false));
       } else {
-        emit(state.copyWith(status: SearchStatus.loadMore, loadMore: true));
+        emit(state.copyWith(status: DiscoverStatus.loadMore, loadMore: true));
       }
 
-      final response = await _movieServices.fetchSearch(
-        query: query,
+      final response = await _movieServices.fetchDiscover(
+        withGenre: withGenre,
         page: page,
         includeAdult: includeAdult,
-        year: year,
       );
       final searchList = page == 1
           ? response.results as List<ResultsModel>
           : [...state.listData, ...response.results as List<ResultsModel>];
 
       emit(state.copyWith(
-        status: SearchStatus.success,
+        status: DiscoverStatus.success,
         listData: searchList,
         pagination: response,
         loadMore: false,
       ));
     } catch (e) {
-      emit(state.copyWith(err: e.toString(), status: SearchStatus.failure));
+      emit(state.copyWith(err: e.toString(), status: DiscoverStatus.failure));
     }
   }
 
   void reset() {
-    emit(const SearchState());
+    emit(const DiscoverState());
   }
 }

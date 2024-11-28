@@ -21,7 +21,9 @@ mixin Services {
         onRequest: (request, handler) {
           request.headers['Authorization'] =
               'Bearer ${dotenv.env['TMDB_TOKEN_KEY']}';
-          if (sessionId != null && sessionId.isNotEmpty) {
+          if (sessionId != null &&
+              sessionId.isNotEmpty &&
+              (request.method == 'POST' || request.method == 'DELETE')) {
             request.queryParameters['session_id'] = sessionId;
           }
           return handler.next(request);

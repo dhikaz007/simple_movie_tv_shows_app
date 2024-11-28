@@ -10,8 +10,10 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 import 'constant/constant.dart';
 import 'feature/auth/cubit/auth_cubit.dart';
+import 'feature/home/movie/cubit/discover_cubit.dart';
 import 'feature/home/movie/cubit/now_playing_cubit.dart';
 import 'feature/home/movie/cubit/popular_cubit.dart';
+import 'feature/home/movie/cubit/search_cubit.dart';
 import 'feature/home/movie/cubit/top_rated_cubit.dart';
 import 'feature/home/movie/cubit/upcoming_cubit.dart';
 import 'feature/profile/cubit/profile_cubit.dart';
@@ -26,10 +28,10 @@ void main() async {
   Hive.registerAdapter(ProfileHiveAdapter());
   await Hive.openBox<ProfileHive>('PROFILE');
   await FkUserAgent.init();
-  await initializeDateFormatting('id');
 
   final region = WidgetsBinding.instance.platformDispatcher.locale.countryCode;
   await LocalStorage.setRegion(region: region ?? 'EN');
+  await initializeDateFormatting(region);
   await SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -58,6 +60,8 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => PopularCubit()),
         BlocProvider(create: (context) => TopRatedCubit()),
         BlocProvider(create: (context) => UpcomingCubit()),
+        BlocProvider(create: (context) => SearchCubit()),
+        BlocProvider(create: (context) => DiscoverCubit()),
       ],
       child: GlobalLoaderOverlay(
         overlayColor: AppColor.black.withAlpha(150).withOpacity(.3),

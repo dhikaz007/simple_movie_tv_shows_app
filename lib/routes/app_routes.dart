@@ -29,7 +29,7 @@ class AppRoutes extends Module {
     r.module(
       '/movie',
       module: MovieRoutes(),
-      transition: TransitionType.downToUp,
+      transition: TransitionType.scale,
     );
   }
 }

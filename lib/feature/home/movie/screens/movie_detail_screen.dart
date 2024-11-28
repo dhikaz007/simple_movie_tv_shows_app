@@ -1,14 +1,62 @@
 part of 'screens.dart';
 
 class MovieDetailScreen extends StatelessWidget {
-  const MovieDetailScreen({super.key});
+  final ResultsModel movie;
+  const MovieDetailScreen({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
       body: DefaultBackground(
-        child: Container(),
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverAppBar(
+              backgroundColor: Colors.transparent,
+              expandedHeight: MediaQuery.sizeOf(context).height / 4,
+              pinned: true,
+              floating: true,
+              leading: IconButton(
+                visualDensity: VisualDensity.compact,
+                onPressed: () {
+                  Modular.to.pop();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: AppColor.white,
+                ),
+              ),
+              title: AppText(
+                text: movie.originalTitle ?? '-',
+                size: FontAppSize.font_20,
+                color: AppColor.white,
+                weight: FontAppWeight.medium,
+              ),
+              centerTitle: true,
+              forceElevated: innerBoxIsScrolled,
+              flexibleSpace: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+                child: CachedImage(
+                  imageUrl:
+                      '${UrlConstant.baseUrlImageOriginal}${movie.backdropPath}',
+                ),
+              ),
+            ),
+          ],
+          body: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            children: const [
+              AppText(
+                text: 'CHILD !',
+                size: FontAppSize.font_14,
+                color: AppColor.white,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
