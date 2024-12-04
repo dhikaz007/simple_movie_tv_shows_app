@@ -30,10 +30,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    PopupMenuButton<String>(
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: kToolbarHeight),
+                  child: NavigationToolbar(
+                    leading: PopupMenuButton<String>(
                       initialValue: _searchValue,
                       icon: SvgPicture.asset(
                         AppIcons.icSearch,
@@ -82,15 +82,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ],
                     ),
-                    const AppText(
+                    middle: const AppText(
                       text: 'MovieTime',
                       size: FontAppSize.font_18,
                       weight: FontAppWeight.bold,
                       color: AppColor.red,
                     ),
-                    InkWell(
-                      onTap: () {},
-                      child: SvgPicture.asset(
+                    trailing: IconButton(
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
                         AppIcons.icNotification,
                         colorFilter: const ColorFilter.mode(
                           AppColor.white,
@@ -98,9 +99,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-                const Gap(20),
+                const Gap(16),
                 TabBar(
                   controller: _tabController,
                   physics: const NeverScrollableScrollPhysics(),

@@ -73,7 +73,9 @@ class MainApp extends StatelessWidget {
           child: Container(
             color: AppColor.white,
             padding: const EdgeInsets.all(12),
-            child: const CircularProgressIndicator.adaptive(),
+            child: const CircularProgressIndicator.adaptive(
+              valueColor: AlwaysStoppedAnimation(AppColor.red),
+            ),
           ),
         ),
         child: MaterialApp.router(
@@ -84,6 +86,13 @@ class MainApp extends StatelessWidget {
             fontFamily: 'Montserrat',
           ),
           routerConfig: Modular.routerConfig,
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: MediaQuery.textScalerOf(context)
+                  .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.5),
+            ),
+            child: child!,
+          ),
         ),
       ),
     );

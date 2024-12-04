@@ -76,26 +76,22 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SafeArea(
-              child: Row(
-                children: [
-                  IconButton(
-                    visualDensity: VisualDensity.compact,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: kToolbarHeight),
+                child: NavigationToolbar(
+                  leading: BackButton(
                     onPressed: () {
                       Modular.to.pop();
                     },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: AppColor.white,
-                    ),
+                    color: AppColor.white,
                   ),
-                  const Gap(16),
-                  const AppText(
+                  middle: const AppText(
                     text: 'Discover Movie',
                     size: FontAppSize.font_18,
                     color: AppColor.white,
                     weight: FontAppWeight.medium,
                   ),
-                ],
+                ),
               ),
             ),
             const Gap(12),

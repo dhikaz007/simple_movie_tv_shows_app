@@ -8,60 +8,29 @@ class MovieScreen extends StatefulWidget {
 }
 
 class _MovieScreenState extends State<MovieScreen> {
-  final ValueNotifier<List<Genres>> _listGenre = ValueNotifier([]);
-  final ValueNotifier<bool> _loadingGenre = ValueNotifier(true);
-  final ValueNotifier<List<ResultsModel>> _listNowMovie = ValueNotifier([]);
-  final ValueNotifier<bool> _loadingNowMovie = ValueNotifier(true);
+  final ScrollController npScroll = ScrollController();
+
+  late Future<ResponseAPI<GenresModel>> listGenres;
+  late Future<PaginationResponseAPI<ResultsModel>> listNowMovie;
 
   @override
   void initState() {
     super.initState();
-    initialize();
+    _loadGenres();
+    _loadNowPlayingMovie();
   }
 
   @override
   void dispose() {
-    _listGenre.dispose();
-    _loadingGenre.dispose();
-    _loadingNowMovie.dispose();
-    _listNowMovie.dispose();
     super.dispose();
   }
 
-  void initialize() async {
-    final completer = Completer<void>();
-    await Future.wait([
-      _loadGenres(),
-      _loadNowPlayingMovie(),
-    ]).then((_) => completer.complete());
-
-    await completer.future;
+  Future<ResponseAPI<GenresModel>> _loadGenres() {
+    return listGenres = MovieServices().fetchGenres();
   }
 
-  Future<void> _loadGenres() async {
-    try {
-      _loadingGenre.value = true;
-      final response = await MovieServices().fetchGenres();
-      _listGenre.value = response.data?.genres ?? [];
-    } on DioException catch (e) {
-      if (!mounted) return;
-      AppDialog.showSnackbar(context, e.msgDioErr(), SnackBarStatus.failure);
-    } finally {
-      _loadingGenre.value = false;
-    }
-  }
-
-  Future<void> _loadNowPlayingMovie() async {
-    try {
-      _loadingNowMovie.value = true;
-      final response = await MovieServices().fetchNowPlaying(1);
-      _listNowMovie.value = response.results ?? [];
-    } on DioException catch (e) {
-      if (!mounted) return;
-      AppDialog.showSnackbar(context, e.msgDioErr(), SnackBarStatus.failure);
-    } finally {
-      _loadingNowMovie.value = false;
-    }
+  Future<PaginationResponseAPI<ResultsModel>> _loadNowPlayingMovie() async {
+    return listNowMovie = MovieServices().fetchNowPlaying(1);
   }
 
   @override
@@ -77,102 +46,82 @@ class _MovieScreenState extends State<MovieScreen> {
           },
         ),
         const Gap(12),
-        ValueListenableBuilder(
-          valueListenable: _loadingGenre,
-          builder: (context, value, child) {
-            if (value == true) {
-              return child!;
+        FutureBuilder(
+          future: _loadGenres(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const GenresShimmer();
+            } else if (snapshot.hasData) {
+              return GenreWidget(listGenre: snapshot.data?.data?.genres ?? []);
             } else {
-              return ValueListenableBuilder(
-                valueListenable: _listGenre,
-                builder: (context, value, child) => child!,
-                child: Container(
-                  constraints: const BoxConstraints.expand(
-                    height: 32,
-                  ),
-                  child: ListView.separated(
-                    itemCount: _listGenre.value.take(5).length,
-                    separatorBuilder: (context, index) => const Gap(12),
-                    physics: const ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      final genre = _listGenre.value[index];
-                      return ActionChip(
-                        visualDensity: VisualDensity.compact,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        onPressed: () {
-                          print('${genre.id}');
-                        },
-                        label: AppText(
-                            text: genre.name ?? '-',
-                            size: FontAppSize.font_12,
-                            color: AppColor.black),
-                      );
-                    },
-                  ),
-                ),
-              );
+              return const SizedBox.shrink();
             }
           },
-          child: const Center(
-            child: CircularProgressIndicator(),
-          ),
         ),
         const Gap(20),
         HeaderTitle(
           label: 'Now Playing',
-          onTap: () {},
+          onTap: () {
+            Modular.to.pushNamed('/movie/now-playing');
+          },
         ),
         const Gap(12),
-        ValueListenableBuilder(
-          valueListenable: _loadingNowMovie,
-          builder: (context, loadingNowMovie, child) {
-            if (loadingNowMovie == true) {
-              return child!;
-            } else {
-              return ValueListenableBuilder(
-                valueListenable: _listNowMovie,
-                builder: (context, nowMovie, child) => nowMovie.isEmpty
-                    ? const Center(
-                        child: AppText(
-                          text: 'Data Empty',
-                          size: FontAppSize.font_14,
-                          color: AppColor.black,
-                        ),
-                      )
-                    : child!,
-                child: Expanded(
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _listNowMovie.value.length,
-                    separatorBuilder: (context, index) => const Gap(12),
-                    itemBuilder: (context, index) {
-                      final nowMovie = _listNowMovie.value[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Modular.to
-                              .pushNamed('/movie/detail', arguments: nowMovie);
-                        },
-                        child: MovieCard(
-                          title: nowMovie.originalTitle ?? '-',
-                          date: nowMovie.releaseDate ?? DateTime.now(),
-                          vote: nowMovie.voteAverage ?? 0.0,
-                          poster: nowMovie.posterPath ?? '-',
-                        ),
-                      );
-                    },
+        FutureBuilder(
+          future: _loadNowPlayingMovie(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Flexible(
+                child: ListView.separated(
+                  controller: npScroll,
+                  scrollDirection: Axis.horizontal,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: 10,
+                  separatorBuilder: (context, index) => const Gap(12),
+                  itemBuilder: (context, index) => const RectangleShimmer(
+                    w: 140,
+                    h: 270,
+                    r: 10,
                   ),
                 ),
               );
+            } else if (snapshot.hasData) {
+              return Expanded(
+                child: ListView.separated(
+                  controller: npScroll,
+                  scrollDirection: Axis.horizontal,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: snapshot.data?.results?.length ?? 0,
+                  separatorBuilder: (context, index) => const Gap(12),
+                  itemBuilder: (context, index) {
+                    final nowMovie = snapshot.data?.results?[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Modular.to
+                            .pushNamed('/movie/detail', arguments: nowMovie);
+                      },
+                      child: MovieCard(
+                        title: nowMovie?.title ?? '-',
+                        date: nowMovie?.releaseDate ?? DateTime.now(),
+                        vote: nowMovie?.voteAverage ?? 0.0,
+                        poster: nowMovie?.posterPath ?? '-',
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return const SizedBox.shrink();
             }
           },
-          child: const Center(
-            child: CircularProgressIndicator(
-              color: AppColor.red,
-            ),
-          ),
-        )
+        ),
+        const Gap(20),
+        HeaderTitle(
+          label: 'Popular',
+          onTap: () {
+            Modular.to.pushNamed('/movie/popular');
+          },
+        ),
+        const Gap(12),
       ],
     );
   }

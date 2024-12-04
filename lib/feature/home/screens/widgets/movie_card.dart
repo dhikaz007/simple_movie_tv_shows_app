@@ -15,9 +15,8 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 140,
-      height: 270,
+    return Container(
+      alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,12 +69,15 @@ class MovieCard extends StatelessWidget {
             ),
           ),
           const Gap(4),
-          AppText(
-            text: title,
-            size: FontAppSize.font_14,
-            weight: FontAppWeight.medium,
-            overflow: TextOverflow.ellipsis,
-            color: AppColor.white,
+          SizedBox(
+            width: 140,
+            child: AppText(
+              text: title,
+              size: FontAppSize.font_14,
+              weight: FontAppWeight.medium,
+              overflow: TextOverflow.ellipsis,
+              color: AppColor.white,
+            ),
           ),
           const Gap(4),
           AppText(

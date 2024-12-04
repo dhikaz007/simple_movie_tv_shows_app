@@ -10,5 +10,7 @@ class MovieRoutes extends Module {
       child: (_) => const SearchMovieScreen(),
       transition: TransitionType.downToUp,
     );
+    r.child('/now-playing', child: (_) => const NowPlayingMovieScreen());
+    r.child('/popular', child: (_) => const PopularMovieScreen());
   }
 }

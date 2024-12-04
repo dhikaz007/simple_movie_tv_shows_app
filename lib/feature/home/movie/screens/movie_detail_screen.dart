@@ -16,15 +16,11 @@ class MovieDetailScreen extends StatelessWidget {
               expandedHeight: MediaQuery.sizeOf(context).height / 4,
               pinned: true,
               floating: true,
-              leading: IconButton(
-                visualDensity: VisualDensity.compact,
+              leading: BackButton(
                 onPressed: () {
                   Modular.to.pop();
                 },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: AppColor.white,
-                ),
+                color: AppColor.white,
               ),
               title: AppText(
                 text: movie.originalTitle ?? '-',
