@@ -20,13 +20,13 @@ class MovieDetailScreen extends StatelessWidget {
                 onPressed: () {
                   Modular.to.pop();
                 },
-                color: AppColor.white,
+                color: AppColor.red,
               ),
               title: AppText(
                 text: movie.originalTitle ?? '-',
                 size: FontAppSize.font_20,
-                color: AppColor.white,
-                weight: FontAppWeight.medium,
+                color: AppColor.red,
+                weight: FontAppWeight.bold,
               ),
               centerTitle: true,
               forceElevated: innerBoxIsScrolled,

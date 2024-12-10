@@ -34,8 +34,8 @@ class DiscoverCubit extends Cubit<DiscoverState> {
         includeAdult: includeAdult,
       );
       final searchList = page == 1
-          ? response.results as List<ResultsModel>
-          : [...state.listData, ...response.results as List<ResultsModel>];
+          ? response.results
+          : [...state.listData, ...response.results];
 
       emit(state.copyWith(
         status: DiscoverStatus.success,

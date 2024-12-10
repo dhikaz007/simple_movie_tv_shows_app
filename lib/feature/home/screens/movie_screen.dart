@@ -70,18 +70,13 @@ class _MovieScreenState extends State<MovieScreen> {
           future: _loadNowPlayingMovie(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Flexible(
+              return Expanded(
                 child: ListView.separated(
-                  controller: npScroll,
                   scrollDirection: Axis.horizontal,
-                  physics: const ClampingScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: 10,
                   separatorBuilder: (context, index) => const Gap(12),
-                  itemBuilder: (context, index) => const RectangleShimmer(
-                    w: 140,
-                    h: 270,
-                    r: 10,
-                  ),
+                  itemBuilder: (context, index) => const MovieCardShimmer(),
                 ),
               );
             } else if (snapshot.hasData) {
@@ -90,10 +85,10 @@ class _MovieScreenState extends State<MovieScreen> {
                   controller: npScroll,
                   scrollDirection: Axis.horizontal,
                   physics: const ClampingScrollPhysics(),
-                  itemCount: snapshot.data?.results?.length ?? 0,
+                  itemCount: snapshot.data?.results.length ?? 0,
                   separatorBuilder: (context, index) => const Gap(12),
                   itemBuilder: (context, index) {
-                    final nowMovie = snapshot.data?.results?[index];
+                    final nowMovie = snapshot.data?.results[index];
                     return GestureDetector(
                       onTap: () {
                         Modular.to

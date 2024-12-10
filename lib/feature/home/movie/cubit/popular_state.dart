@@ -14,19 +14,26 @@ final class PopularLoading extends PopularState {}
 final class PopularLoaded extends PopularState {
   final List<ResultsModel> response;
   final bool lastPage;
+  final int currentPage;
 
-  const PopularLoaded({required this.response, this.lastPage = false});
+  const PopularLoaded({
+    this.response = const [],
+    this.lastPage = false,
+    this.currentPage = 1,
+  });
 
   PopularLoaded copyWith({
     List<ResultsModel>? response,
     bool? lastPage,
+    int? currentPage,
   }) =>
       PopularLoaded(
         response: response ?? this.response,
         lastPage: lastPage ?? this.lastPage,
+        currentPage: currentPage ?? this.currentPage,
       );
   @override
-  List<Object?> get props => [response, lastPage];
+  List<Object?> get props => [response, lastPage, currentPage];
 }
 
 final class PopularFailed extends PopularState {
@@ -36,36 +43,3 @@ final class PopularFailed extends PopularState {
   @override
   List<Object?> get props => [err];
 }
-
-// class PopularState extends Equatable {
-//   final PaginationResponseAPI<ResultsModel> pagination;
-//   final List<ResultsModel> listData;
-//   final MovieStatusState status;
-//   final String? err;
-//   final bool loadMore;
-//   const PopularState({
-//     this.pagination = const PaginationResponseAPI(),
-//     this.listData = const [],
-//     this.status = MovieStatusState.initial,
-//     this.err,
-//     this.loadMore = false,
-//   });
-
-//   PopularState copyWith({
-//     PaginationResponseAPI<ResultsModel>? pagination,
-//     List<ResultsModel>? listData,
-//     MovieStatusState? status,
-//     String? err,
-//     bool? loadMore,
-//   }) =>
-//       PopularState(
-//         pagination: pagination ?? this.pagination,
-//         listData: listData ?? this.listData,
-//         status: status ?? this.status,
-//         err: err,
-//         loadMore: loadMore ?? this.loadMore,
-//       );
-
-//   @override
-//   List<Object?> get props => [pagination, listData, status, err, loadMore];
-// }

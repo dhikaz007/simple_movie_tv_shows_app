@@ -61,6 +61,7 @@ class _PopularMovieScreenState extends State<PopularMovieScreen> {
                 child: NavigationToolbar(
                   leading: BackButton(
                     onPressed: () {
+                      context.read<PopularCubit>().reset();
                       Modular.to.pop();
                     },
                     color: AppColor.white,
@@ -78,7 +79,9 @@ class _PopularMovieScreenState extends State<PopularMovieScreen> {
             BlocListener<PopularCubit, PopularState>(
               listener: (context, state) {
                 if (state is PopularLoaded) {
-                  _pagingController.appendPage(state.response,
+                  final newItems = state.response
+                      .sublist(_pagingController.itemList?.length ?? 0);
+                  _pagingController.appendPage(newItems,
                       state.lastPage ? null : state.response.length ~/ 20 + 1);
                 } else if (state is PopularFailed) {
                   _pagingController.error = state.err;

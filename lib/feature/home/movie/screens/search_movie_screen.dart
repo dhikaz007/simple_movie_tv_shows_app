@@ -27,7 +27,7 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
     if (state.status == SearchStatus.loadMore ||
         state.status == SearchStatus.failure) return;
 
-    final nextPage = state.pagination.page! + 1;
+    final nextPage = state.pagination.page + 1;
     context.read<SearchCubit>().search(query: query.text, page: nextPage);
 
     print('SCROLLED $nextPage');

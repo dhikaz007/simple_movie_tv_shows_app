@@ -50,7 +50,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     if (state.status == DiscoverStatus.loadMore ||
         state.status == DiscoverStatus.failure) return;
 
-    final nextPage = (state.pagination.page ?? 0) + 1;
+    final nextPage = state.pagination.page + 1;
     context.read<DiscoverCubit>().discover(page: nextPage, withGenre: genre);
 
     print('SCROLLED $nextPage');

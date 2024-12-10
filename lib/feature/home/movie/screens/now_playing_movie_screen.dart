@@ -36,7 +36,7 @@ class _NowPlayingMovieScreenState extends State<NowPlayingMovieScreen> {
     if (state.status == MovieStatusState.loadMore ||
         state.status == MovieStatusState.failure) return;
 
-    final nextPage = (state.pagination.page ?? 0) + 1;
+    final nextPage = state.pagination.page + 1;
     context.read<NowPlayingCubit>().nowPlaying(nextPage);
 
     print('SCROLLED $nextPage');
@@ -67,6 +67,7 @@ class _NowPlayingMovieScreenState extends State<NowPlayingMovieScreen> {
                 child: NavigationToolbar(
                   leading: BackButton(
                     onPressed: () {
+                      context.read<NowPlayingCubit>().reset();
                       Modular.to.pop();
                     },
                     color: AppColor.white,
@@ -84,9 +85,20 @@ class _NowPlayingMovieScreenState extends State<NowPlayingMovieScreen> {
             BlocBuilder<NowPlayingCubit, NowPlayingState>(
               builder: (context, state) {
                 if (state.status == MovieStatusState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(
-                      valueColor: AlwaysStoppedAnimation(AppColor.red),
+                  return Expanded(
+                    child: GridView.builder(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: 10,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: .65,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                      ),
+                      itemBuilder: (context, index) => const MovieCardShimmer(),
                     ),
                   );
                 }
@@ -121,7 +133,8 @@ class _NowPlayingMovieScreenState extends State<NowPlayingMovieScreen> {
                             padding: EdgeInsets.all(8.0),
                             child: Center(
                               child: CircularProgressIndicator.adaptive(
-                                valueColor: AlwaysStoppedAnimation(AppColor.red),
+                                valueColor:
+                                    AlwaysStoppedAnimation(AppColor.red),
                               ),
                             ),
                           );

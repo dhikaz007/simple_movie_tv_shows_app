@@ -13,20 +13,35 @@ class NowPlayingCubit extends Cubit<NowPlayingState> {
 
   final MovieServices _movieServices = MovieServices();
 
+  //* Method 2
   void nowPlaying(int? page) async {
-    try {
-      if (state.status == MovieStatusState.loading ||
-          state.status == MovieStatusState.loadMore) return;
+    // Cek jika sedang dalam status loading atau load more
+    if (state.status == MovieStatusState.loading ||
+        state.status == MovieStatusState.loadMore) return;
 
-      if (page == 1) {
-        emit(state.copyWith(status: MovieStatusState.loading, loadMore: false));
-      } else {
-        emit(state.copyWith(status: MovieStatusState.loadMore, loadMore: true));
-      }
+    try {
+      // Atur status loading atau loadMore berdasarkan halaman
+      emit(state.copyWith(
+        status:
+            page == 1 ? MovieStatusState.loading : MovieStatusState.loadMore,
+        loadMore: page != 1,
+      ));
+
+      // Fetch data dari API
       final response = await _movieServices.fetchNowPlaying(page);
-      List<ResultsModel> movieList = page == 1
-          ? response.results as List<ResultsModel>
-          : [...state.listData, ...response.results as List<ResultsModel>];
+
+      // Cek jika ini adalah halaman terakhir
+      if (response.page == response.totalPages) {
+        emit(state.copyWith(loadMore: false));
+        return;
+      }
+
+      // Perbarui daftar film berdasarkan halaman
+      final List<ResultsModel> movieList = page == 1
+          ? response.results
+          : [...state.listData, ...response.results];
+
+      // Emit state dengan data yang diperbarui
       emit(state.copyWith(
         status: MovieStatusState.success,
         listData: movieList,
@@ -34,7 +49,11 @@ class NowPlayingCubit extends Cubit<NowPlayingState> {
         loadMore: false,
       ));
     } catch (e) {
-      emit(state.copyWith(err: e.toString(), status: MovieStatusState.failure));
+      // Tangani error dan emit status failure
+      emit(state.copyWith(
+        err: e.toString(),
+        status: MovieStatusState.failure,
+      ));
     }
   }
 

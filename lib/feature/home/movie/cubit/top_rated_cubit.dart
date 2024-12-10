@@ -25,8 +25,8 @@ class TopRatedCubit extends Cubit<TopRatedState> {
       }
       final response = await _movieServices.fetchNowPlaying(page);
       List<ResultsModel> movieList = page == 1
-          ? response.results as List<ResultsModel>
-          : [...state.listData, ...response.results as List<ResultsModel>];
+          ? response.results
+          : [...state.listData, ...response.results];
       emit(state.copyWith(
         status: MovieStatusState.success,
         listData: movieList,

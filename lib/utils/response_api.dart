@@ -17,17 +17,17 @@ class ResponseAPI<T> {
 
 class PaginationResponseAPI<T> {
   final Dates? dates;
-  final int? page;
-  final List<T>? results;
-  final int? totalPages;
-  final int? totalResults;
+  final int page;
+  final List<T> results;
+  final int totalPages;
+  final int totalResults;
 
   const PaginationResponseAPI({
     this.dates,
-    this.page,
-    this.results,
-    this.totalPages,
-    this.totalResults,
+    this.page = 0,
+    this.results = const [],
+    this.totalPages = 1,
+    this.totalResults = 0,
   });
 
   factory PaginationResponseAPI.fromJson(Map<String, dynamic> json) {
@@ -35,12 +35,11 @@ class PaginationResponseAPI<T> {
       dates: json['dates'] != null
           ? Dates.fromJson(json['dates'] as Map<String, dynamic>)
           : null,
-      page: json['page'] != null ? json['page'] as int : null,
-      results: json['results'] != null ? List<T>.from(json['results']) : null,
-      totalPages:
-          json['total_pages'] != null ? json['total_pages'] as int : null,
+      page: json['page'] != 0 ? json['page'] as int : 0,
+      results: json['results'] != [] ? List<T>.from(json['results']) : [],
+      totalPages: json['total_pages'] != 0 ? json['total_pages'] as int : 1,
       totalResults:
-          json['total_results'] != null ? json['total_results'] as int : null,
+          json['total_results'] != 0 ? json['total_results'] as int : 0,
     );
   }
 

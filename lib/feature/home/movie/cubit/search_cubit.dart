@@ -12,6 +12,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   final MovieServices _movieServices = MovieServices();
 
+  //* Method 1
   void search({
     required String query,
     int? page,
@@ -34,9 +35,15 @@ class SearchCubit extends Cubit<SearchState> {
         includeAdult: includeAdult,
         year: year,
       );
+
+      if (response.page == response.totalPages) {
+        emit(state.copyWith(loadMore: false)); // Set loadMore ke false
+        return; // Keluar dari fungsi
+      }
+
       final searchList = page == 1
-          ? response.results as List<ResultsModel>
-          : [...state.listData, ...response.results as List<ResultsModel>];
+          ? response.results
+          : [...state.listData, ...response.results];
 
       emit(state.copyWith(
         status: SearchStatus.success,
