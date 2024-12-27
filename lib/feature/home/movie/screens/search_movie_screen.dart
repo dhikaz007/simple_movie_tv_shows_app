@@ -27,7 +27,7 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
     if (state.status == SearchStatus.loadMore ||
         state.status == SearchStatus.failure) return;
 
-    final nextPage = state.pagination.page + 1;
+    final nextPage = state.page + 1;
     context.read<SearchCubit>().search(query: query.text, page: nextPage);
 
     print('SCROLLED $nextPage');
@@ -145,7 +145,7 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
                   const Gap(20),
                   BlocBuilder<SearchCubit, SearchState>(
                     builder: (context, state) {
-                      //print(state);
+                      print(state.status);
                       if (state.status == SearchStatus.initial) {
                         return const Center(
                           child: AppText(
@@ -156,20 +156,23 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
                           ),
                         );
                       }
+
+                      int items = state.listData.length;
+                      if (state.page < state.totalPage) {
+                        items += 1;
+                      }
+
                       return NotificationListener<ScrollNotification>(
                         onNotification: (notification) {
                           if (notification.metrics.pixels ==
-                                  notification.metrics.maxScrollExtent &&
-                              state.status == SearchStatus.success) {
+                              notification.metrics.maxScrollExtent) {
                             _onScroll(_searchController);
                           }
                           return false;
                         },
                         child: Expanded(
                           child: ListView.separated(
-                            itemCount: state.loadMore
-                                ? state.listData.length + 1
-                                : state.listData.length,
+                            itemCount: items,
                             separatorBuilder: (context, index) => const Column(
                               children: [
                                 Gap(4),
@@ -178,35 +181,25 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
                               ],
                             ),
                             itemBuilder: (context, index) {
-                              if (state.status == SearchStatus.loading) {
-                                return const Center(
-                                  child: CircularProgressIndicator.adaptive(
-                                    valueColor:
-                                        AlwaysStoppedAnimation(AppColor.red),
+                              if (index >= state.listData.length) {
+                                return const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: CircularProgressIndicator.adaptive(
+                                      valueColor:
+                                          AlwaysStoppedAnimation(AppColor.red),
+                                    ),
                                   ),
                                 );
-                              } else {
-                                if (index >= state.listData.length) {
-                                  return const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Center(
-                                      child: CircularProgressIndicator.adaptive(
-                                        valueColor: AlwaysStoppedAnimation(
-                                            AppColor.red),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                ResultsModel searchMovie =
-                                    state.listData[index];
-                                return InkWell(
-                                  onTap: () {
-                                    Modular.to.pushNamed('/movie/detail',
-                                        arguments: searchMovie);
-                                  },
-                                  child: SearchCardWidget(movie: searchMovie),
-                                );
                               }
+                              ResultsModel searchMovie = state.listData[index];
+                              return InkWell(
+                                onTap: () {
+                                  Modular.to.pushNamed('/movie/detail',
+                                      arguments: searchMovie);
+                                },
+                                child: SearchCardWidget(movie: searchMovie),
+                              );
                             },
                           ),
                         ),

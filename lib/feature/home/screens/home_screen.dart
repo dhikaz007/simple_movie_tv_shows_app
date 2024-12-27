@@ -9,24 +9,28 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late final TabController _tabController;
-  final String _searchValue = '';
 
   @override
   void initState() {
     super.initState();
-    //context.read<ProfileCubit>().loadProfilte();
     _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
+      resizeToAvoidBottomInset: true,
       body: DefaultBackground(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          physics: const ClampingScrollPhysics(),
-          child: SafeArea(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -34,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   constraints: const BoxConstraints(maxHeight: kToolbarHeight),
                   child: NavigationToolbar(
                     leading: PopupMenuButton<String>(
-                      initialValue: _searchValue,
                       icon: SvgPicture.asset(
                         AppIcons.icSearch,
                         colorFilter: const ColorFilter.mode(
@@ -106,6 +109,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   controller: _tabController,
                   physics: const NeverScrollableScrollPhysics(),
                   dividerColor: Colors.transparent,
+                  indicatorColor: AppColor.white,
+                  labelColor: AppColor.red,
+                  unselectedLabelColor: AppColor.white,
                   tabs: const [
                     Tab(text: 'Movies'),
                     Tab(text: 'TV Shows'),
@@ -113,8 +119,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
                 const Gap(20),
                 SizedBox(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: MediaQuery.sizeOf(context).height / 2,
+                  height: MediaQuery.sizeOf(context).height * 1.6,
                   child: TabBarView(
                     controller: _tabController,
                     physics: const NeverScrollableScrollPhysics(),

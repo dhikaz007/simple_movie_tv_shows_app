@@ -7,13 +7,15 @@ class SearchState extends Equatable {
   final List<ResultsModel> listData;
   final SearchStatus status;
   final String? err;
-  final bool loadMore;
+  final int page;
+  final int totalPage;
   const SearchState({
     this.pagination = const PaginationResponseAPI(),
     this.listData = const [],
     this.status = SearchStatus.initial,
     this.err,
-    this.loadMore = false,
+    this.page = 1,
+    this.totalPage = 1,
   });
 
   SearchState copyWith({
@@ -21,16 +23,25 @@ class SearchState extends Equatable {
     List<ResultsModel>? listData,
     SearchStatus? status,
     String? err,
-    bool? loadMore,
+    int? page,
+    int? totalPage,
   }) =>
       SearchState(
         pagination: pagination ?? this.pagination,
         listData: listData ?? this.listData,
         status: status ?? this.status,
         err: err,
-        loadMore: loadMore ?? this.loadMore,
+        page: page ?? this.page,
+        totalPage: totalPage ?? this.totalPage,
       );
 
   @override
-  List<Object?> get props => [pagination, listData, status, err, loadMore];
+  List<Object?> get props => [
+        pagination,
+        listData,
+        status,
+        err,
+        page,
+        totalPage,
+      ];
 }

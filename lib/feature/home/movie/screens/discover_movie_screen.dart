@@ -1,13 +1,13 @@
 part of 'screens.dart';
 
-class DiscoverScreen extends StatefulWidget {
-  const DiscoverScreen({super.key});
+class DiscoverMovieScreen extends StatefulWidget {
+  const DiscoverMovieScreen({super.key});
 
   @override
-  State<DiscoverScreen> createState() => _DiscoverScreenState();
+  State<DiscoverMovieScreen> createState() => _DiscoverMovieScreenState();
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
+class _DiscoverMovieScreenState extends State<DiscoverMovieScreen> {
   final ScrollController _scrollController = ScrollController();
   final ValueNotifier<bool> _showFab = ValueNotifier<bool>(false);
   final ValueNotifier<List<Genres>> _listGenre = ValueNotifier([]);
@@ -193,6 +193,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               },
             ),
             const Gap(12),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: AppText(
+                text: 'Result',
+                size: FontAppSize.font_14,
+                color: AppColor.white,
+                weight: FontAppWeight.medium,
+              ),
+            ),
+            const Gap(12),
             BlocBuilder<DiscoverCubit, DiscoverState>(
               builder: (context, state) {
                 if (state.status == DiscoverStatus.loading) {
@@ -226,31 +236,38 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       context: context,
                       removeBottom: true,
                       removeTop: true,
-                      child: ListView.separated(
+                      child: GridView.builder(
                         controller: _scrollController,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        physics: const ClampingScrollPhysics(),
                         itemCount: state.loadMore
                             ? state.listData.length + 1
                             : state.listData.length,
-                        separatorBuilder: (context, index) => const Gap(8),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: .65,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                        ),
                         itemBuilder: (context, index) {
                           if (index >= state.listData.length) {
                             return const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Center(
                                 child: CircularProgressIndicator(
-                                  color: AppColor.white,
+                                  color: AppColor.red,
                                 ),
                               ),
                             );
                           }
                           ResultsModel movie = state.listData[index];
-                          return ListTile(
-                            visualDensity: VisualDensity.compact,
-                            title: AppText(
-                              text: movie.originalTitle ?? '-',
-                              size: FontAppSize.font_12,
-                              color: AppColor.white,
-                            ),
+                          return MovieCard(
+                            title: movie.originalTitle ?? '-',
+                            date: movie.releaseDate ?? DateTime.now(),
+                            vote: movie.voteAverage ?? 0.0,
+                            poster: movie.posterPath ?? '-',
                           );
                         },
                       ),

@@ -1,7 +1,7 @@
 part of 'shared.dart';
 
 class CachedImage extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final double width;
   final double height;
   const CachedImage({
@@ -14,7 +14,7 @@ class CachedImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: imageUrl,
+      imageUrl: imageUrl ?? '',
       width: width,
       height: height,
       fit: BoxFit.cover,

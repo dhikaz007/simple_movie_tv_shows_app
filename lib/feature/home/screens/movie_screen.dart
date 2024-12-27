@@ -8,36 +8,28 @@ class MovieScreen extends StatefulWidget {
 }
 
 class _MovieScreenState extends State<MovieScreen> {
-  final ScrollController npScroll = ScrollController();
-
   late Future<ResponseAPI<GenresModel>> listGenres;
   late Future<PaginationResponseAPI<ResultsModel>> listNowMovie;
+  late Future<PaginationResponseAPI<ResultsModel>> listPopularMovie;
+  late Future<PaginationResponseAPI<ResultsModel>> listTopRatedMovie;
+  late Future<PaginationResponseAPI<ResultsModel>> listUpcomingMovie;
 
   @override
   void initState() {
     super.initState();
-    _loadGenres();
-    _loadNowPlayingMovie();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  Future<ResponseAPI<GenresModel>> _loadGenres() {
-    return listGenres = MovieServices().fetchGenres();
-  }
-
-  Future<PaginationResponseAPI<ResultsModel>> _loadNowPlayingMovie() async {
-    return listNowMovie = MovieServices().fetchNowPlaying(1);
+    Future.wait([
+      listGenres = MovieServices().fetchGenres(),
+      listNowMovie = MovieServices().fetchNowPlaying(1),
+      listPopularMovie = MovieServices().fetchPopular(1),
+      listTopRatedMovie = MovieServices().fetchTopRated(1),
+      listUpcomingMovie = MovieServices().fetchUpcoming(1),
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
         HeaderTitle(
           label: 'Discover Genres',
@@ -46,18 +38,7 @@ class _MovieScreenState extends State<MovieScreen> {
           },
         ),
         const Gap(12),
-        FutureBuilder(
-          future: _loadGenres(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const GenresShimmer();
-            } else if (snapshot.hasData) {
-              return GenreWidget(listGenre: snapshot.data?.data?.genres ?? []);
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
+        GenreWidget(future: listGenres),
         const Gap(20),
         HeaderTitle(
           label: 'Now Playing',
@@ -66,50 +47,8 @@ class _MovieScreenState extends State<MovieScreen> {
           },
         ),
         const Gap(12),
-        FutureBuilder(
-          future: _loadNowPlayingMovie(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Expanded(
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  separatorBuilder: (context, index) => const Gap(12),
-                  itemBuilder: (context, index) => const MovieCardShimmer(),
-                ),
-              );
-            } else if (snapshot.hasData) {
-              return Expanded(
-                child: ListView.separated(
-                  controller: npScroll,
-                  scrollDirection: Axis.horizontal,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: snapshot.data?.results.length ?? 0,
-                  separatorBuilder: (context, index) => const Gap(12),
-                  itemBuilder: (context, index) {
-                    final nowMovie = snapshot.data?.results[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Modular.to
-                            .pushNamed('/movie/detail', arguments: nowMovie);
-                      },
-                      child: MovieCard(
-                        title: nowMovie?.title ?? '-',
-                        date: nowMovie?.releaseDate ?? DateTime.now(),
-                        vote: nowMovie?.voteAverage ?? 0.0,
-                        poster: nowMovie?.posterPath ?? '-',
-                      ),
-                    );
-                  },
-                ),
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
-        const Gap(20),
+        MovieWidget(future: listNowMovie),
+        const Gap(16),
         HeaderTitle(
           label: 'Popular',
           onTap: () {
@@ -117,6 +56,25 @@ class _MovieScreenState extends State<MovieScreen> {
           },
         ),
         const Gap(12),
+        MovieWidget(future: listPopularMovie),
+        const Gap(16),
+        HeaderTitle(
+          label: 'Top Rated',
+          onTap: () {
+            Modular.to.pushNamed('/movie/top-rated');
+          },
+        ),
+        const Gap(12),
+        MovieWidget(future: listTopRatedMovie),
+        const Gap(16),
+        HeaderTitle(
+          label: 'Upcoming',
+          onTap: () {
+            Modular.to.pushNamed('/movie/upcoming');
+          },
+        ),
+        const Gap(12),
+        MovieWidget(future: listUpcomingMovie),
       ],
     );
   }

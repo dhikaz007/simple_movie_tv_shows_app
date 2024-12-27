@@ -30,7 +30,7 @@ class SearchCardWidget extends StatelessWidget {
                       ? const SizedBox.shrink()
                       : CachedImage(
                           imageUrl:
-                              '${UrlConstant.baseUrlImageOriginal}${movie.posterPath}'),
+                              '${UrlConstant.baseUrlImage500}${movie.posterPath}'),
                 ),
                 Positioned(
                   top: 0,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,12 +16,15 @@ import '../cubit/discover_cubit.dart';
 import '../cubit/now_playing_cubit.dart';
 import '../cubit/popular_cubit.dart';
 import '../cubit/search_cubit.dart';
+import '../cubit/top_rated_cubit.dart';
 import '../domain/models/models.dart';
 import '../domain/services/services.dart';
 import 'widgets/widgets.dart';
 
-part 'discover_screen.dart';
+part 'discover_movie_screen.dart';
 part 'movie_detail_screen.dart';
-part 'search_movie_screen.dart';
 part 'now_playing_movie_screen.dart';
 part 'popular_movie_screen.dart';
+part 'search_movie_screen.dart';
+part 'top_rated_movie_screen.dart';
+part 'upcoming_movie_screen.dart';

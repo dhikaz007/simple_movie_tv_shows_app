@@ -17,15 +17,18 @@ class MovieDetailScreen extends StatelessWidget {
               pinned: true,
               floating: true,
               leading: BackButton(
+                style: const ButtonStyle(
+                  visualDensity: VisualDensity.compact,
+                ),
                 onPressed: () {
                   Modular.to.pop();
                 },
-                color: AppColor.red,
+                color: AppColor.white,
               ),
               title: AppText(
                 text: movie.originalTitle ?? '-',
                 size: FontAppSize.font_20,
-                color: AppColor.red,
+                color: AppColor.white,
                 weight: FontAppWeight.bold,
               ),
               centerTitle: true,
@@ -35,9 +38,12 @@ class MovieDetailScreen extends StatelessWidget {
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10),
                 ),
-                child: CachedImage(
-                  imageUrl:
-                      '${UrlConstant.baseUrlImageOriginal}${movie.backdropPath}',
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                  child: CachedImage(
+                    imageUrl:
+                        '${UrlConstant.baseUrlImageOriginal}${movie.backdropPath}',
+                  ),
                 ),
               ),
             ),

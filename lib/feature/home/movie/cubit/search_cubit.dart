@@ -19,16 +19,21 @@ class SearchCubit extends Cubit<SearchState> {
     bool? includeAdult = false,
     String? year,
   }) async {
+    final p = page ?? state.page;
+
+    if (p > state.totalPage + 1) return;
+
+    SearchStatus status = SearchStatus.initial;
+    List<ResultsModel> search = List.of(state.listData);
+
+    if (p == 1) {
+      search.clear();
+    } else {
+      status = SearchStatus.loadMore;
+    }
+    emit(state.copyWith(status: status));
+
     try {
-      if (state.status == SearchStatus.loading ||
-          state.status == SearchStatus.loadMore) return;
-
-      if (page == 1) {
-        emit(state.copyWith(status: SearchStatus.loading, loadMore: false));
-      } else {
-        emit(state.copyWith(status: SearchStatus.loadMore, loadMore: true));
-      }
-
       final response = await _movieServices.fetchSearch(
         query: query,
         page: page,
@@ -36,20 +41,16 @@ class SearchCubit extends Cubit<SearchState> {
         year: year,
       );
 
-      if (response.page == response.totalPages) {
-        emit(state.copyWith(loadMore: false)); // Set loadMore ke false
-        return; // Keluar dari fungsi
+      if (p > 1) {
+        search.addAll(response.results);
+      } else {
+        search = response.results;
       }
-
-      final searchList = page == 1
-          ? response.results
-          : [...state.listData, ...response.results];
 
       emit(state.copyWith(
         status: SearchStatus.success,
-        listData: searchList,
-        pagination: response,
-        loadMore: false,
+        listData: search,
+        totalPage: response.totalPages,
       ));
     } catch (e) {
       emit(state.copyWith(err: e.toString(), status: SearchStatus.failure));

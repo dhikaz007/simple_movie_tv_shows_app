@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../constant/constant.dart';
-import '../../../../utils/utils.dart';
 import '../domain/models/models.dart';
 import '../domain/services/services.dart';
 
@@ -13,25 +12,34 @@ class TopRatedCubit extends Cubit<TopRatedState> {
 
   final MovieServices _movieServices = MovieServices();
 
-  void topRated(int? page) async {
-    try {
-      if (state.status == MovieStatusState.loading ||
-          state.status == MovieStatusState.loadMore) return;
+  void topRated(int page) async {
+    final p = page;
+    if (p > state.totalPage + 1) return;
 
-      if (page == 1) {
-        emit(state.copyWith(status: MovieStatusState.loading, loadMore: false));
+    MovieStatusState status = MovieStatusState.initial;
+    List<ResultsModel> topRated = List.of(state.listData);
+
+    if (p == 1) {
+      topRated.clear();
+    } else {
+      status = MovieStatusState.loadMore;
+    }
+    emit(state.copyWith(status: status));
+
+    try {
+      final response = await _movieServices.fetchTopRated(page);
+
+      if (p > 1) {
+        topRated.addAll(response.results);
       } else {
-        emit(state.copyWith(status: MovieStatusState.loadMore, loadMore: true));
+        topRated = response.results;
       }
-      final response = await _movieServices.fetchNowPlaying(page);
-      List<ResultsModel> movieList = page == 1
-          ? response.results
-          : [...state.listData, ...response.results];
+
       emit(state.copyWith(
         status: MovieStatusState.success,
-        listData: movieList,
-        pagination: response,
-        loadMore: false,
+        listData: topRated,
+        page: response.page,
+        totalPage: response.totalPages,
       ));
     } catch (e) {
       emit(state.copyWith(err: e.toString(), status: MovieStatusState.failure));
