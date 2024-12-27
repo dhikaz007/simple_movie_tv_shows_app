@@ -38,7 +38,7 @@ class TopRatedCubit extends Cubit<TopRatedState> {
       emit(state.copyWith(
         status: MovieStatusState.success,
         listData: topRated,
-        page: response.page,
+        page: page == response.page ? response.page : page,
         totalPage: response.totalPages,
       ));
     } catch (e) {

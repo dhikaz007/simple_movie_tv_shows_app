@@ -2,7 +2,8 @@ part of 'widgets.dart';
 
 class SearchCardWidget extends StatelessWidget {
   final ResultsModel movie;
-  const SearchCardWidget({super.key, required this.movie});
+  final VoidCallback? onPressed;
+  const SearchCardWidget({super.key, required this.movie, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +101,9 @@ class SearchCardWidget extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: TextButton.icon(
                     iconAlignment: IconAlignment.end,
-                    onPressed: () {},
+                    onPressed: onPressed,
+                    style:
+                        const ButtonStyle(visualDensity: VisualDensity.compact),
                     icon: const CircleAvatar(
                       radius: 12,
                       backgroundColor: AppColor.white,

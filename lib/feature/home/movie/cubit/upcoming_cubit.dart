@@ -23,7 +23,7 @@ class UpcomingCubit extends Cubit<UpcomingState> {
       } else {
         emit(state.copyWith(status: MovieStatusState.loadMore, loadMore: true));
       }
-      final response = await _movieServices.fetchNowPlaying(page);
+      final response = await _movieServices.fetchUpcoming(page);
       List<ResultsModel> movieList = page == 1
           ? response.results
           : [...state.listData, ...response.results];

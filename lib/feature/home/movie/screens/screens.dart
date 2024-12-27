@@ -17,6 +17,7 @@ import '../cubit/now_playing_cubit.dart';
 import '../cubit/popular_cubit.dart';
 import '../cubit/search_cubit.dart';
 import '../cubit/top_rated_cubit.dart';
+import '../cubit/upcoming_cubit.dart';
 import '../domain/models/models.dart';
 import '../domain/services/services.dart';
 import 'widgets/widgets.dart';

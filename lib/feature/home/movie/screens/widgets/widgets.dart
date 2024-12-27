@@ -7,3 +7,4 @@ import '../../../../../shared/shared.dart';
 import '../../domain/models/models.dart';
 
 part 'search_card.dart';
+part 'search_shimmer.dart';

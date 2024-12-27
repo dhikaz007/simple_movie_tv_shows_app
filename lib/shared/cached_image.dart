@@ -23,7 +23,7 @@ class CachedImage extends StatelessWidget {
       errorWidget: (context, url, error) => Container(
         width: width,
         height: height,
-        color: AppColor.white,
+        color: AppColor.white.withOpacity(.2),
         child: const Icon(
           Icons.error,
           color: AppColor.red,

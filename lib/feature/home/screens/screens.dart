@@ -5,7 +5,6 @@ import 'package:flutter_modular/flutter_modular.dart'
     hide ModularWatchExtension;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-import 'package:quickalert/quickalert.dart';
 
 import '../../../constant/constant.dart';
 import '../../../shared/shared.dart';

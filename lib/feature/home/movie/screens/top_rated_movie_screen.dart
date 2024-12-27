@@ -62,21 +62,24 @@ class _TopRatedMovieScreenState extends State<TopRatedMovieScreen> {
         child: Column(
           children: [
             SafeArea(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxHeight: kToolbarHeight),
-                child: NavigationToolbar(
-                  leading: BackButton(
-                    onPressed: () {
-                      context.read<TopRatedCubit>().reset();
-                      Modular.to.pop();
-                    },
-                    color: AppColor.white,
-                  ),
-                  middle: const AppText(
-                    text: 'Top Rated Movie',
-                    size: FontAppSize.font_18,
-                    color: AppColor.white,
-                    weight: FontAppWeight.medium,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: kToolbarHeight),
+                  child: NavigationToolbar(
+                    leading: BackButton(
+                      onPressed: () {
+                        context.read<TopRatedCubit>().reset();
+                        Modular.to.pop();
+                      },
+                      color: AppColor.white,
+                    ),
+                    middle: const AppText(
+                      text: 'Top Rated Movie',
+                      size: FontAppSize.font_18,
+                      color: AppColor.white,
+                      weight: FontAppWeight.medium,
+                    ),
                   ),
                 ),
               ),
