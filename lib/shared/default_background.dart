@@ -7,10 +7,10 @@ class DefaultBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-        maxWidth: MediaQuery.sizeOf(context).width,
-        maxHeight: MediaQuery.sizeOf(context).height,
-      ),
+      // constraints: BoxConstraints(
+      //   maxWidth: MediaQuery.sizeOf(context).width,
+      //   maxHeight: MediaQuery.sizeOf(context).height,
+      // ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,

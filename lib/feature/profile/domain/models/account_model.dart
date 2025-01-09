@@ -51,6 +51,9 @@ class Avatar {
       );
 
   const Avatar({this.gravatar, this.tmdb});
+
+  @override
+  String toString() => 'Avatar(gravatar: $gravatar, tmdb: $tmdb)';
 }
 
 class Gravatar {

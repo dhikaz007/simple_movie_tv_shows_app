@@ -21,4 +21,5 @@ class AppIcons {
   static const icApple = '$basePath/ic_apple.svg';
   static const icFacebook = '$basePath/ic_fb.svg';
   static const icGoogle = '$basePath/ic_google.svg';
+  static const icFavorite = '$basePath/ic_favorite.svg';
 }

@@ -16,7 +16,9 @@ import 'feature/home/movie/cubit/popular_cubit.dart';
 import 'feature/home/movie/cubit/search_cubit.dart';
 import 'feature/home/movie/cubit/top_rated_cubit.dart';
 import 'feature/home/movie/cubit/upcoming_cubit.dart';
+import 'feature/profile/cubit/lists_cubit.dart';
 import 'feature/profile/cubit/profile_cubit.dart';
+import 'feature/watchlist/cubit/watchlist_cubit.dart';
 import 'hive_storage/profile_hive.dart';
 import 'routes/routes.dart';
 import 'utils/utils.dart';
@@ -35,6 +37,8 @@ void main() async {
   await SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
     ],
   ).then(
     (_) => runApp(
@@ -62,6 +66,8 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => UpcomingCubit()),
         BlocProvider(create: (context) => SearchCubit()),
         BlocProvider(create: (context) => DiscoverCubit()),
+        BlocProvider(create: (context) => WatchlistCubit()),
+        BlocProvider(create: (context) => ListsCubit()),
       ],
       child: GlobalLoaderOverlay(
         overlayColor: AppColor.black.withAlpha(150).withOpacity(.3),

@@ -7,5 +7,6 @@ import '../../../constant/constant.dart';
 import '../../../helpers/helpers.dart';
 import '../../../shared/shared.dart';
 import '../../auth/cubit/auth_cubit.dart';
+import '../cubit/lists_cubit.dart';
 
 part 'profile_screen.dart';

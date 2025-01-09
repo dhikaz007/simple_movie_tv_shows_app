@@ -1,0 +1,1 @@
+part 'watchlist_model.dart';

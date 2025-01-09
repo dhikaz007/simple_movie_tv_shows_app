@@ -20,9 +20,7 @@ final class ProfileServices with Services implements ProfileRepository {
       final data = response.data;
       if (response.statusCode == 200) {
         final datas = AccountModel.fromJson(data);
-        print('INI DATA');
-        print(datas);
-        print('SAMPE SINI');
+        LoggerHelper.info(datas.toString());
         return ResponseAPI<AccountModel>.fromJson(datas);
       }
       throw data['status_message'];

@@ -13,7 +13,7 @@ class _MainScreenState extends State<MainScreen> {
   static final pages = [
     const HomeScreen(),
     const WatchlistScreen(),
-    const BookmarkScreen(),
+    const FavoriteScreen(),
     const ProfileScreen(),
   ];
 
@@ -88,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               NavigationDestination(
                 icon: SvgPicture.asset(
-                  AppIcons.icBookmark,
+                  AppIcons.icFavorite,
                   height: 28,
                   width: 28,
                   colorFilter: const ColorFilter.mode(
@@ -97,7 +97,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 selectedIcon: SvgPicture.asset(
-                  AppIcons.icBookmark,
+                  AppIcons.icFavorite,
                   height: 28,
                   width: 28,
                   colorFilter: const ColorFilter.mode(

@@ -1,7 +1,18 @@
 part of 'screens.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ListsCubit>().getLists(page: 1);
+  }
 
   @override
   Widget build(BuildContext context) {
