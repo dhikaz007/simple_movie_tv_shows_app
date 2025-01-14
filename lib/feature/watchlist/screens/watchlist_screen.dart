@@ -15,7 +15,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<WatchlistCubit>().myWatchlist(page: 1, order: order);
+    // context.read<WatchlistCubit>().myWatchlist(page: 1, order: order);
     _scrollController.addListener(() {
       if (_scrollController.position.pixels > 200) {
         _showFab.value = true;

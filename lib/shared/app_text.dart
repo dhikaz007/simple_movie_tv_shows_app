@@ -8,6 +8,8 @@ enum FontAppSize {
   font_18,
   font_20,
   font_24,
+  font_28,
+  font_30,
   font_36,
   font_40
 }
@@ -80,6 +82,10 @@ class AppText extends StatelessWidget {
         return 20;
       case FontAppSize.font_24:
         return 24;
+      case FontAppSize.font_28:
+        return 28;
+      case FontAppSize.font_30:
+        return 30;
       case FontAppSize.font_36:
         return 36;
       case FontAppSize.font_40:

@@ -13,7 +13,7 @@ class ListsCubit extends Cubit<ListsState> {
 
   void getLists({required int page}) async {
     final p = page;
-    if (p < state.totalPage + 1) return;
+    if (p > state.totalPage + 1) return;
 
     ListsStatus status = ListsStatus.initial;
     List<ListsModel> lists = List.of(state.listData);
@@ -28,7 +28,7 @@ class ListsCubit extends Cubit<ListsState> {
     try {
       final response = await _listsServices.fetchLists(page);
 
-      if (page > 1) {
+      if (p > 1) {
         lists.addAll(response.results);
       } else {
         lists = response.results;

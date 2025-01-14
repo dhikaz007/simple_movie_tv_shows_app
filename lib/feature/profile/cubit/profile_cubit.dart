@@ -19,7 +19,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       final response = await _profileServices.fetchProfile();
 
       var box = Boxes.getProfile();
-      print('BOX ${box.values}');
+      print('BOX ${box.values.toString()}');
 
       if (box.values.isEmpty) {
         var profile = ProfileHive()
@@ -34,14 +34,16 @@ class ProfileCubit extends Cubit<ProfileState> {
         await box.add(profile);
       } else {
         var profileStorage = box.values.first;
-        profileStorage.gravatar = response.data!.avatar!.gravatar!.hash!;
-        profileStorage.avatarPath = response.data!.avatar!.tmdb!.avatarPath!;
-        profileStorage.id = response.data!.id!;
-        profileStorage.iso6391 = response.data!.iso6391!;
-        profileStorage.iso31661 = response.data!.iso31661!;
-        profileStorage.name = response.data!.name!;
-        profileStorage.includeAdult = response.data!.includeAdult!;
-        profileStorage.username = response.data!.username!;
+
+        profileStorage.gravatar = response.data?.avatar?.gravatar?.hash ?? '';
+        profileStorage.avatarPath =
+            response.data?.avatar?.tmdb?.avatarPath ?? '';
+        profileStorage.id = response.data?.id ?? 0;
+        profileStorage.iso6391 = response.data?.iso6391 ?? '';
+        profileStorage.iso31661 = response.data?.iso31661 ?? '';
+        profileStorage.name = response.data?.name ?? '';
+        profileStorage.includeAdult = response.data?.includeAdult ?? false;
+        profileStorage.username = response.data?.username ?? '';
         profileStorage.save();
       }
 

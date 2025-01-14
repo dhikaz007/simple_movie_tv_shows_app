@@ -49,7 +49,7 @@ class GenresShimmer extends StatelessWidget {
         physics: const ClampingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return const RectangleShimmer(
+          return const AppShimmer(
             w: 80,
             r: 30,
           );

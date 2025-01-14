@@ -19,7 +19,7 @@ class CachedImage extends StatelessWidget {
       height: height,
       fit: BoxFit.cover,
       filterQuality: FilterQuality.high,
-      placeholder: (context, url) => RectangleShimmer(w: width, h: height),
+      placeholder: (context, url) => AppShimmer(w: width, h: height),
       errorWidget: (context, url, error) => Container(
         width: width,
         height: height,

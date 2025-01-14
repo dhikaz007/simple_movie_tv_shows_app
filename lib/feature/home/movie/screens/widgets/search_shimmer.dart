@@ -22,20 +22,20 @@ class SeachShimmer extends StatelessWidget {
               // color: AppColor.red,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const RectangleShimmer(),
+            child: const AppShimmer(),
           ),
           const Gap(12),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const RectangleShimmer(h: 20),
+                const AppShimmer(h: 20),
                 const Gap(4),
-                const RectangleShimmer(h: 20),
+                const AppShimmer(h: 20),
                 const Gap(4),
-                const RectangleShimmer(h: 20),
+                const AppShimmer(h: 20),
                 const Gap(4),
-                const RectangleShimmer(h: 20),
+                const AppShimmer(h: 20),
                 const Gap(8),
                 Align(
                   alignment: Alignment.bottomRight,

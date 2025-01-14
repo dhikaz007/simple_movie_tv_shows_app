@@ -31,5 +31,11 @@ class AppRoutes extends Module {
       module: MovieRoutes(),
       transition: TransitionType.scale,
     );
+    
+    r.module(
+      '/profile',
+      module: ProfileRoutes(),
+      transition: TransitionType.rightToLeft,
+    );
   }
 }

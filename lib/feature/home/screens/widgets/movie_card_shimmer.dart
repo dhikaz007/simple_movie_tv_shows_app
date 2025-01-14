@@ -11,19 +11,19 @@ class MovieCardShimmer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          RectangleShimmer(
+          AppShimmer(
             w: 140,
             h: 220,
             r: 10,
           ),
           Gap(4),
-          RectangleShimmer(
+          AppShimmer(
             w: 80,
             h: 16,
             r: 10,
           ),
           Gap(4),
-          RectangleShimmer(
+          AppShimmer(
             w: 120,
             h: 16,
             r: 10,

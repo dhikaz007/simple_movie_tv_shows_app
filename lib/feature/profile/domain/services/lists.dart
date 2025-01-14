@@ -15,7 +15,7 @@ final class ListsServices with Services implements ListsRepository {
       final sessionId = await LocalStorage.getSessionId();
 
       Response response = await http.get(
-        '/accoount/$accountId/lists',
+        '/account/$accountId/lists',
         queryParameters: {
           "page": page,
           "session_id": sessionId,
@@ -24,10 +24,10 @@ final class ListsServices with Services implements ListsRepository {
 
       final data = response.data;
       if (response.statusCode == 200) {
-        data['data'] = (data['results'] as List)
+        data['results'] = (data['results'] as List)
             .map((e) => ListsModel.fromMap(e))
             .toList();
-        LoggerHelper.info(data);
+        LoggerHelper.info(data['results'].toString());
         return PaginationResponseAPI<ListsModel>.fromJson(data);
       }
       throw data['status_message'];

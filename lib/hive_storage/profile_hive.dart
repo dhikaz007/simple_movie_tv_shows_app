@@ -27,4 +27,9 @@ class ProfileHive extends HiveObject {
 
   @HiveField(7)
   late String username;
+
+  @override
+  String toString() {
+    return 'ProfileHive(gravatar: $gravatar, avatarPath: $avatarPath, id: $id, iso6391: $iso6391, iso31661: $iso31661, name: $name, includeAdult: $includeAdult, username: $username)';
+  }
 }

@@ -133,7 +133,7 @@ class _DiscoverMovieScreenState extends State<DiscoverMovieScreen> {
                       runSpacing: 8,
                       children: List.generate(
                         20,
-                        (index) => const RectangleShimmer(w: 60, r: 8),
+                        (index) => const AppShimmer(w: 60, r: 8),
                       ),
                     ),
                   );
