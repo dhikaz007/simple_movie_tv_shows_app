@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../utils/utils.dart';
 import '../domain/models/models.dart';
 import '../domain/services/services.dart';
 
@@ -13,32 +14,13 @@ class ListsCubit extends Cubit<ListsState> {
 
   void getLists({required int page}) async {
     final p = page;
-    if (p > state.totalPage + 1) return;
-
-    ListsStatus status = ListsStatus.initial;
-    List<ListsModel> lists = List.of(state.listData);
-
-    if (p == 1) {
-      lists.clear();
-    } else {
-      status = ListsStatus.loadMore;
-    }
-    emit(state.copyWith(status: status));
-
     try {
-      final response = await _listsServices.fetchLists(page);
-
-      if (p > 1) {
-        lists.addAll(response.results);
-      } else {
-        lists = response.results;
-      }
+      emit(state.copyWith(status: ListsStatus.loading));
+      final response = await _listsServices.fetchLists(p);
 
       emit(state.copyWith(
         status: ListsStatus.success,
-        listData: lists,
-        page: page == response.page ? response.page : page,
-        totalPage: response.totalPages,
+        listData: response,
       ));
     } catch (e) {
       emit(state.copyWith(status: ListsStatus.failure, err: e.toString()));

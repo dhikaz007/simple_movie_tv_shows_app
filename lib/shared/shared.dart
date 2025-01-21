@@ -11,8 +11,10 @@ import '../feature/favorite/screens/screens.dart';
 import '../feature/home/screens/screens.dart';
 import '../feature/profile/screens/screens.dart';
 import '../feature/watchlist/screens/screens.dart';
+import '../helpers/helpers.dart';
 
 part 'app_dialog.dart';
+part 'app_shimmer.dart';
 part 'app_text.dart';
 part 'app_textfield.dart';
 part 'avatar_text.dart';
@@ -21,4 +23,4 @@ part 'cached_image.dart';
 part 'default_background.dart';
 part 'main_screen.dart';
 part 'pagination_fab.dart';
-part 'app_shimmer.dart';
+part 'pagination_web.dart';

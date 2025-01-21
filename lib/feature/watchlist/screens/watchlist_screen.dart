@@ -65,6 +65,11 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
               ),
             ),
             Gap(16),
+            Flexible(
+              child: ListView(
+                shrinkWrap: true,
+              ),
+            ),
           ],
         ),
       ),

@@ -22,12 +22,11 @@ class MenuList extends StatelessWidget {
       ),
       trailing: Transform.flip(
         flipX: true,
-        child: const BackButton(
+        child: BackButton(
           color: AppColor.white,
-          onPressed: null,
+          onPressed: onTap,
         ),
       ),
-      onTap: onTap,
     );
   }
 }

@@ -4,3 +4,4 @@ import 'package:logger/logger.dart';
 
 part 'custom_loading.dart';
 part 'logger_helper.dart';
+part 'scale_ui.dart';

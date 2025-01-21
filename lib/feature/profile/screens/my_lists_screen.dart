@@ -47,8 +47,10 @@ class _MyListsScreenState extends State<MyListsScreen> {
               BlocBuilder<ListsCubit, ListsState>(
                 builder: (context, state) {
                   if (state.status == ListsStatus.loading) {
-                    return const CircularProgressIndicator.adaptive(
-                      valueColor: AlwaysStoppedAnimation(AppColor.red),
+                    return Center(
+                      child: const CircularProgressIndicator.adaptive(
+                        valueColor: AlwaysStoppedAnimation(AppColor.red),
+                      ),
                     );
                   }
                   return MediaQuery.removePadding(
@@ -56,18 +58,42 @@ class _MyListsScreenState extends State<MyListsScreen> {
                     removeTop: true,
                     child: ListView.separated(
                       shrinkWrap: true,
-                      itemCount: state.listData.length,
+                      itemCount: state.listData.results.length,
                       separatorBuilder: (context, index) => const Divider(
                         color: AppColor.grey,
                       ),
                       itemBuilder: (context, index) {
-                        final lists = state.listData[index];
+                        final lists = state.listData.results[index];
                         return MyListsWidget(listsModel: lists);
                       },
                     ),
                   );
                 },
-              )
+              ),
+              const Gap(12),
+              SizedBox(
+                height: 50,
+                width: double.maxFinite,
+                child: BlocSelector<ListsCubit, ListsState, List<int>>(
+                  selector: (state) {
+                    return [
+                      state.listData.page,
+                      state.listData.totalPages,
+                    ];
+                  },
+                  builder: (context, state) {
+                    return state[1] <= 1
+                        ? const SizedBox.shrink()
+                        : PaginationWeb(
+                            currentPage: state[0],
+                            totalPage: state[1],
+                            onTap: (x) {
+                              context.read<ListsCubit>().getLists(page: x);
+                            },
+                          );
+                  },
+                ),
+              ),
             ],
           ),
         ),

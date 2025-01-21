@@ -92,8 +92,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                     child: MenuList(
                       title: 'Log Out',
-                      onTap: () {
-                        context.read<AuthCubit>().logout();
+                      onTap: () async {
+                        await QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.confirm,
+                          title: 'Are you sure to logout ?',
+                          onConfirmBtnTap: () {
+                            context.read<AuthCubit>().logout();
+                          },
+                        );
                       },
                     ),
                   ),
